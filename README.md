@@ -7,12 +7,12 @@ A simple and support the restful structure of the Java MVC framework, I have lit
   一、ioc集成
     dreamvc可以集成任何ioc框架，只要按照指定接口就行
 ###看这个接口
-package org.majorxie.dreamvc.ioc.factory;
+		package org.majorxie.dreamvc.ioc.factory;
 
-import java.util.List;
+		import java.util.List;
 
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletContext;
+		import javax.servlet.ServletConfig;
+		import javax.servlet.ServletContext;
 
 
 
@@ -59,6 +59,7 @@ public interface IocFactory {
 	
 	
 }
+
 
 
 
