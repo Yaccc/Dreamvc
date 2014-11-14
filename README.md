@@ -56,9 +56,9 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 然后这样就行了
 ### 看xml文件
 		  <init-param>
-    <param-name>container</param-name>
-    <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
-  </init-param>
+		<param-name>container</param-name>
+		<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
+		</init-param>
 
 
   
