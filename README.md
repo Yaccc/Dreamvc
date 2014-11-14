@@ -4,7 +4,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
   我就用中文写了~~~~^_^,这个框架是我自己的第一个开元作品，还是非常用心的！:-D 在javaweb开发的世界里有很多开元的mvc框架,balalal~~  因为在这一年中学习了Struts2,Spring IOC,SpringMVC,Mybatis.虽然我也还只是一个菜鸟，但是我也想学习大神的代码，就花了一些时间去看Springmvc和Struts2的源代码，因为当时觉得mvc最厉害O哈哈~，现在发现并不是这样，
   而且之前用过python的flask框架，和模板机制，所以我采用的类似flask框架的模板。可以继承jsp/velocity/freemaker等模板，并且提供了一个ioc容器接口，可以继承SPRING容器或者其他，甚至是自己写的容器，在拦截器方面我没有采用Struts2的思想，而是在SpringMVC的思想下有所改进。在参数注入方面，我采用的是springmvc的方法机制，这样更好控制，然而在方法参数注入这一块，如果你没有用spring的情况下需要加入一个字节码增强包javassist.当然如果你用了spring你就可以不用这个依赖了.然后，Dreamvc可以选择两个入口。比如struts2是采用filter的，springmvc是采用servlet的，dreamvc适配了两个接口，开发者可以选择自己的喜好而定，当然，在我写下这篇东西的时候，这个作品并没有完全完成，但是大部分功能都实现了,接下来做的事情还有很多，我正在努力，详细文档讲陆续写出来
   我现在讲几个重要的部分:
-  一、ioc集成
+###一、ioc集成
     dreamvc可以集成任何ioc框架，只要按照指定接口就行
 ### 看这个接口
 		package org.majorxie.dreamvc.ioc.factory;
@@ -59,6 +59,76 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		<param-name>container</param-name>
 		<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
 		</init-param>
+这样就实现dreamvc和ioc模块的集成，当然还可以自己实现自己的伪ioc，哈哈。
+###二、模板模式集成，默认jsp模板
+结合了flask框架的思想。让用户可以选择自己的模板比如JSP/VELOCITY/FREEMAKER，继承这个模板工厂
+		package org.majorxie.dreamvc.template;
+		
+		import org.majorxie.dreamvc.tag.Contextconfig.Config;
+		
+		/**
+		 * 抽象工厂，用于初始化模板工厂
+		 * @author xiezhaodong
+		 *2014-11-14
+		 */
+		public abstract class TemplateFactory {
+			private static TemplateFactory instance;
+			
+			
+			public static void setInstance(TemplateFactory instance) {
+				TemplateFactory.instance = instance;
+			}
+			
+			public static TemplateFactory getInstance(){
+				return instance;
+			}
+			
+			/**
+			 * 初始化一些上下文内容
+			 * @param config
+			 */
+			public abstract void init(Config config);
+			
+			/**
+			 * 加载模板
+			 * @param path 要返回的路径
+			 */
+			public abstract Template initTemplate(String path,ForwardType type);
+			
+			
+		}
+然后是这个接口，实现正真的模板
+		package org.majorxie.dreamvc.template;
+		
+		import java.util.Map;
+		
+		import javax.servlet.http.HttpServletRequest;
+		import javax.servlet.http.HttpServletResponse;
+		
+		/**
+		 * 基于python的模板机制
+		 * @author xiezhaodong
+		 *2014-11-14
+		 */
+		public interface Template {
+		
+			
+			
+			/**
+			 * 
+			 * @param req  request
+			 * @param resp response
+			 * @param models 要传递的数据，默认是model
+			 * @throws Exception
+			 */
+			void handleRender(HttpServletRequest req,HttpServletResponse resp,Map<String, Object> models)throws Exception;
+		}
+以下的xml是我自己实现的模板(jsp).
+		    </init-param>
+		    <init-param>
+		    <param-name>template</param-name>
+		    <param-value>test.JspTemplateFactory</param-value>
+		    </init-param>
 
 
   
