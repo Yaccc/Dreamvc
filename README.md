@@ -162,8 +162,8 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 ### 关于拦截器的使用
 首先你必须实现Interceptor接口或者继承AbstractInterceptor类，实现doInterceptor（）和afterInterceptor（）方法，而且必须要使用
 InterceptorURI来指定需要拦截的路径，比如
-		@InterceptorURI(url="/login.do")
-		public class Interceptor_02 extends AbstractInterceptor {
+			@InterceptorURI(url="/login.do")
+			public class Interceptor_02 extends AbstractInterceptor {
 		
 			@Override
 			public boolean doInterceptor() {
