@@ -129,6 +129,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		    <param-name>template</param-name>
 		    <param-value>test.JspTemplateFactory</param-value>
 		    </init-param>
+如果你是默认使用jsp模板的话，你完全社区这个参数，dreamvc会自动帮你选择jsp模板
 
 
   
