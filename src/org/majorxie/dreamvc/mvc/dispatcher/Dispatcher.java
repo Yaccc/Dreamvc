@@ -260,7 +260,7 @@ public class Dispatcher {
 	private void initTemplates(FixableConfig config) throws Exception{
 		
 		String template=config.getInitParameter("template");
-		if("".equals(template)||template==null||template.equals("jsp")){
+		if("".equals(template)||template==null){
 			log.info("You don't have template Parameters ,we will user default JSP template");	
 			template=JSPTEMPLATE;//Ä¬ÈÏjspÄ£°å
 		} 
