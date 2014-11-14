@@ -129,7 +129,34 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		    <param-name>template</param-name>
 		    <param-value>test.JspTemplateFactory</param-value>
 		    </init-param>
-如果你是默认使用jsp模板的话，你完全社区这个参数，dreamvc会自动帮你选择jsp模板
+如果你是默认使用jsp模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
+
+### 如何使用
+		@Controller//用controller注解表示该类或者实现controller接口
+		public class ConTest {
+			
+			@RequestURI("/login.do")//建议用.do的方式类似/user/login/check.do,参数传递最好全部都传，不传递会报404
+			public Renderer hehe(String name,int  s) throws IOException{//目前还不支持bean传递，只要传统的参数
+			//传递，函数返回值可以使String、void、render.render表示只用模板目前有/JsonTemplate/TextTemplate/
+			//和jsp模板TemplateRender,默认跳转是forword跳转，可以看构造函数设置FORWARD.Rediect设置客户端跳转
+			//服务器端跳转可以传递map对象，也可以像下面这种方式
+				TemplateRender render=new TemplateRender("WEB-INF/pages/test.jsp");
+				render.addVaule("posts", "qwoeqwe");
+				return render;	
+			}
+			
+			@RequestURI("/check.do")
+			public void haha() {
+				try {
+					System.out.println("-------");
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			
+				
+			}
+		
+		}
 
 
   
