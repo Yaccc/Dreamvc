@@ -54,10 +54,10 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		}
 然后将实现类的全包路径在web.xml传入就行了，我默认实现了一个Springioc，具体可以见源代码
 然后这样
-		 <init-param>
-		    <param-name>container</param-name>
-		    <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
-		   </init-param>
+		 \<init-param>
+			 \<param-name>container\</param-name>
+		    \<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory\</param-value>
+		   \</init-param>
 
 然后只要这样就行了
 
