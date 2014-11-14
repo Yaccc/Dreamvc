@@ -42,6 +42,7 @@ import org.majorxie.dreamvc.switcher.SwitcherFactory;
 import org.majorxie.dreamvc.tag.Action;
 import org.majorxie.dreamvc.tag.URI;
 import org.majorxie.dreamvc.tag.Contextconfig.FixableConfig;
+import org.majorxie.dreamvc.template.TemplateFactory;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 
 import test.T;
@@ -61,8 +62,8 @@ public class Dispatcher {
 	private ExceptionHandler handler=null;
 	private Interceptor[] interceptors=null;
 	private Map<String,Interceptor> interceptor_uri=new HashMap<String, Interceptor>();
-	//private List<String> method_Param_name=new LinkedList<String>();
 	private String CodeEnhancement=null;
+	private static final String JSPTEMPLATE="org.majorxie.dreamvc.template.JspTemplateFactory";
 	
 	void init(FixableConfig config)throws ServletException{
 		this.servletContext=config.getServletContext();
@@ -106,7 +107,6 @@ public class Dispatcher {
 		initControllerHander(controllerBean);
 		initInterceptorHander(InterceptorBeans);
 		
-		//regexpActionAndInterceptor();
 		//模板加载
 		initTemplates(config);
 		
@@ -124,13 +124,11 @@ public class Dispatcher {
 		 */
 	  public boolean service(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
 		  String url=req.getServletPath();//得到路径如/user/login
-		//  String queryString=req.getQueryString();//得到参数
 		  URI uri=new URI(url);
 		  if(!uri_action.containsKey(uri)){//如果没有匹配返回false
 			  return false;
 		  }
 		  Execution execution=null;
-		  interceptors=regexpActionAndInterceptor(uri);//得到了該url的拦截器链
 		  Action action=uri_action.get(uri);//得到该url对应的方法包装对象
 		 
 		  Method method=action.getMethod();//得到方法
@@ -165,6 +163,7 @@ public class Dispatcher {
 		  execution=new Execution(action, parameters);
 		  }
 		if(execution!=null){
+			interceptors=regexpActionAndInterceptor(uri);//得到了該url的拦截器链
 			handleExecution(req,resp,execution);
 		}
 		  
@@ -180,6 +179,7 @@ public class Dispatcher {
 	  void handleExecution(HttpServletRequest req,
 				HttpServletResponse resp, Execution execution)throws  ServletException, IOException {
 		  ActionContext.setActionContext(servletContext, req, resp);
+		  
 		   InterceptorChain chain=new InterceptorChain(execution, interceptors);
 		   
 			try {
@@ -257,7 +257,18 @@ public class Dispatcher {
 	 * 加载模板
 	 * @param config
 	 */
-	private void initTemplates(FixableConfig config) {
+	private void initTemplates(FixableConfig config) throws Exception{
+		
+		String template=config.getInitParameter("template");
+		if("".equals(template)||template==null||template.equals("jsp")){
+			log.info("You don't have template Parameters ,we will user default JSP template");	
+			template=JSPTEMPLATE;//默认jsp模板
+		} 
+		
+		TemplateFactory templateFactory=FactoryHelper.getInstance().createTemplateFactory(template);
+		templateFactory.init(config);
+		templateFactory.setInstance(templateFactory);
+		
 		
 	}
 	
@@ -345,9 +356,9 @@ public class Dispatcher {
 	}
 	/**
 	 * 得到方法的参数名字 从左往右
-	 * @param CodeEnhancement
-	 * @param method
-	 * @return
+	 * @param CodeEnhancement 字节码增加方式选择使用gjavassist或者LocalVariableTableParameterNameDiscoverer
+	 * @param method 要得到参数名字的方法
+	 * @return List<String>
 	 * @throws Exception 
 	 */
 	private List<String> getMethodParametersName(String CodeEnhancement,Method method) throws Exception{
