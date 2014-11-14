@@ -7,8 +7,8 @@ A simple and support the restful structure of the Java MVC framework, I have lit
   我现在讲几个重要的部分:
   一、ioc集成
     dreamvc可以集成任何ioc框架，只要按照指定接口就行，看这个接口
-<a>qweqwe</a>
 
+<a>http:www.baidu.com</a>
 
 
 然后只要这样就行了
