@@ -158,6 +158,50 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		
 		}
 
+如果你想得到servletapi，你可以在ActionContext.getHttpServletRequest()得到request对象,其他也是一样
+### 关于拦截器的使用
+首先你必须实现Interceptor接口或者继承AbstractInterceptor类，实现doInterceptor（）和afterInterceptor（）方法，而且必须要使用
+InterceptorURI来指定需要拦截的路径，比如
+		@InterceptorURI(url="/login.do")
+		public class Interceptor_02 extends AbstractInterceptor {
+		
+			@Override
+			public boolean doInterceptor() {
+				System.out.println("strat——02");
+				return true;
+			}
+		
+			@Override
+			public void afterInterceptor() {
+				System.out.println("end_02");
+			}
+		}
+		@InterceptorURI(url="/*")
+		public class LoginInterceptor implements Interceptor {
+		
+			public void destory() {
+		
+			}
+		
+			public void init() {
+		
+			}
+		
+			public boolean doInterceptor() {
+				System.out.println("login_start");
+				return true;
+			}
+		
+			public void afterInterceptor() {
+				System.out.println("login_end");
+		
+			}
+		
+		}
+interceptor返回true将会放行，执行下一个拦截器，返回false则不会对应执行方法
+而且匹配度最高的路径会优先拦截，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*代替
+比如我的方法路径是/user/login/check.do
+那么我可以/*/*/check.do拦截可以/user/*/check.do来任意匹配，当然也可以如果短路径最后为*，那么*前面的路径应该相对相同
 
   
   
