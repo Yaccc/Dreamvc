@@ -6,7 +6,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
   我现在讲几个重要的部分:
   一、ioc集成
     dreamvc可以集成任何ioc框架，只要按照指定接口就行
-###看这个接口
+### 看这个接口
 		package org.majorxie.dreamvc.ioc.factory;
 
 		import java.util.List;
@@ -14,55 +14,44 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 		import javax.servlet.ServletConfig;
 		import javax.servlet.ServletContext;
 
-
-
-/**
- *IOC 容器 工厂接口
- *
- * @author xiezhaodong(majorxie@139.com)
- *2014-10-24
- */
-public interface IocFactory {
-	/**
-	 * 加载容器
-	 * @param config
-	 */
-	void init(ServletContext context);
-	
-	
-	/**
-	 * destory ioc
-	 */
-	void destroy();
-	
-	
-	/**
-	 * 得到所有的controller对象
-	 * @return
-	 */
-	List<Object> getControllers()throws Exception;
-	
-	/**
-	 * 是否是拦截器
-	 * @return
-	 */
-	List<Object> getInterceptors();
-	
-	/**
-	 * 得到其他对象
-	 * @return
-	 */
-	List<Object> getOthers();
-	
-	
-	
-	
-	
-}
-
-
-
-
+		/**
+		 *IOC 容器 工厂接口
+		 *
+	 	* @author xiezhaodong(majorxie@139.com)
+		 *2014-10-24
+		 */
+		public interface IocFactory {
+			/**
+			 * 加载容器
+			 * @param config
+			 */
+			void init(ServletContext context);
+			
+			
+			/**
+			 * destory ioc
+			 */
+			void destroy();
+			
+			
+			/**
+			 * 得到所有的controller对象
+			 * @return
+			 */
+			List<Object> getControllers()throws Exception;
+			
+			/**
+			 * 是否是拦截器
+			 * @return
+			 */
+			List<Object> getInterceptors();
+			
+			/**
+			 * 得到其他对象
+			 * @return
+			 */
+			List<Object> getOthers();
+		}
 
 
 然后只要这样就行了
