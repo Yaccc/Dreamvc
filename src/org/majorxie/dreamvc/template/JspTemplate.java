@@ -30,11 +30,9 @@ public class JspTemplate implements Template {
 		}       
 	        if(ForwardType.Forward==type||type==null){
 	        	req.getRequestDispatcher(path).forward(req, resp);
-	        	System.out.println("forward");
 	        	return;
 	        	
 	        }
-	        System.out.println("red");
 	        resp.sendRedirect(path);
 	        
 		
