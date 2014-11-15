@@ -38,6 +38,7 @@ import org.majorxie.dreamvc.interceptor.Interceptor;
 import org.majorxie.dreamvc.interceptor.InterceptorChain;
 import org.majorxie.dreamvc.ioc.factory.IocFactory;
 import org.majorxie.dreamvc.renderer.Renderer;
+import org.majorxie.dreamvc.renderer.TextRenderer;
 import org.majorxie.dreamvc.switcher.SwitcherFactory;
 import org.majorxie.dreamvc.tag.Action;
 import org.majorxie.dreamvc.tag.URI;
@@ -226,6 +227,10 @@ public class Dispatcher {
 				r.render(servletContext, req, resp);
 				return ;
 			}
+			if(result instanceof String){
+				new TextRenderer((String)result).render(servletContext, req, resp);
+				return;
+			}
 			
 			
 		}
@@ -397,5 +402,4 @@ public class Dispatcher {
 	}
 	
 
-	
 }
