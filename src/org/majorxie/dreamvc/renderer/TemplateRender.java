@@ -28,6 +28,7 @@ public class TemplateRender extends Renderer   {
 
 	public TemplateRender(String path, ForwardType type) {
 		this(path,type,null);
+		models=new HashMap<String, Object>();
 	}
 
 	public TemplateRender(String path, ForwardType type,
