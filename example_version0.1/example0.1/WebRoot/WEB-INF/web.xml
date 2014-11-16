@@ -55,6 +55,12 @@
     <param-name>template</param-name>
     <param-value></param-value><!-- 选择返回模板这里不填自动选择jsp模板 -->
     </init-param>
+    <!-- velocity模板
+   <init-param>
+    <param-name>template</param-name>
+    <param-value>org.majorxie.dreamvc.template.VelocityTemplateFactory</param-value>
+    </init-param>
+    -->
     
   </filter>
   
