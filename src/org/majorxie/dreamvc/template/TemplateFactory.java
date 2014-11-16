@@ -1,6 +1,6 @@
 package org.majorxie.dreamvc.template;
 
-import org.majorxie.dreamvc.tag.Contextconfig.Config;
+import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
 
 /**
  * 抽象工厂，用于初始化模板工厂
@@ -23,7 +23,7 @@ public abstract class TemplateFactory {
 	 * 初始化一些上下文内容
 	 * @param config
 	 */
-	public abstract void init(Config config);
+	public abstract void init(StrategyConfig config);
 	
 	/**
 	 * 加载模板
