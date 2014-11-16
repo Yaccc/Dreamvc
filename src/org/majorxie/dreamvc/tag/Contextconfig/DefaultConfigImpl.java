@@ -28,7 +28,7 @@ public class DefaultConfigImpl implements FixableConfig {
 		this(null,filterConfig);
 	}
 	
-	public DefaultConfigImpl(ServletConfig servletConfig,FilterConfig filterConfig) {
+	private DefaultConfigImpl(ServletConfig servletConfig,FilterConfig filterConfig) {
 		this.filterConfig =filterConfig;
 		this.servletConfig=servletConfig;
 	}
