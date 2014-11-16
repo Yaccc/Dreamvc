@@ -1,7 +1,6 @@
 package org.majorxie.dreamvc.mvc.dispatcher;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.GenericServlet;
 import javax.servlet.ServletConfig;
@@ -13,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.majorxie.dreamvc.tag.Contextconfig.DefaultConfigImpl;
+import org.majorxie.dreamvc.tag.Contextconfig.StrategyContext;
 /**
  * dispatcher类，负责初始化任务
  * @author xiezhaodong
@@ -35,7 +34,7 @@ public class DispatcherServlet extends GenericServlet {
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
 		this.dispatcher=new Dispatcher();
-		DefaultConfigImpl configImpl=new DefaultConfigImpl(config); 
+		StrategyContext configImpl=new StrategyContext(config); 
 		dispatcher.init(configImpl);
 		
 		
