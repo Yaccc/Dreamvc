@@ -47,7 +47,7 @@ public class VelocityTemplateFactory extends TemplateFactory {
     public Template initTemplate(String path,ForwardType type)throws Exception {
         if (log.isDebugEnabled())
             log.debug("Load Velocity template '" + path + "'.");
-        rtInstance.addProperty("webapp.resource.loader.path", "");
+       // rtInstance.addProperty("webapp.resource.loader.path", "");
         rtInstance.init(props);
         return new VelocityTemplate(
                 rtInstance.getTemplate(path, inputEncoding),
