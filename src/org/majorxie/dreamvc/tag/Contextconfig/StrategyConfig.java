@@ -6,7 +6,7 @@ import javax.servlet.ServletContext;
  * @author xiezhaodong
  *
  */
-public interface Config {
+public interface StrategyConfig {
 	
 	/**
 	 * 得到指定了参数

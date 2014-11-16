@@ -17,18 +17,18 @@ import javax.servlet.ServletContext;
  *filterconfig用于filter进入
  *
  */
-public class DefaultConfigImpl implements FixableConfig {
+public class StrategyContext implements FixableConfig {
 	private ServletConfig servletConfig;
 	private FilterConfig filterConfig;
 	
-	public DefaultConfigImpl(ServletConfig servletConfig) {
+	public StrategyContext(ServletConfig servletConfig) {
 		this(servletConfig,null);
 	}
-	public DefaultConfigImpl(FilterConfig filterConfig) {
+	public StrategyContext(FilterConfig filterConfig) {
 		this(null,filterConfig);
 	}
 	
-	private DefaultConfigImpl(ServletConfig servletConfig,FilterConfig filterConfig) {
+	private StrategyContext(ServletConfig servletConfig,FilterConfig filterConfig) {
 		this.filterConfig =filterConfig;
 		this.servletConfig=servletConfig;
 	}
