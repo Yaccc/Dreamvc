@@ -3,7 +3,7 @@ package org.majorxie.dreamvc.template;
 import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
 
 /**
- * 抽象工厂，用于初始化模板工厂
+ * 锟斤拷锟襟工筹拷锟斤拷锟斤拷锟节筹拷始锟斤拷模锟藉工锟斤拷
  * @author xiezhaodong
  *2014-11-14
  */
@@ -20,16 +20,17 @@ public abstract class TemplateFactory {
 	}
 	
 	/**
-	 * 初始化一些上下文内容
+	 * 锟斤拷始锟斤拷一些锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷
 	 * @param config
 	 */
 	public abstract void init(StrategyConfig config);
 	
 	/**
-	 * 加载模板
-	 * @param path 要返回的路径
+	 * 锟斤拷锟斤拷模锟斤拷
+	 * @param path
+	 *  鎶涘嚭寮傚父
 	 */
-	public abstract Template initTemplate(String path,ForwardType type);
+	public abstract Template initTemplate(String path,ForwardType type) throws Exception;
 	
 	
 }
