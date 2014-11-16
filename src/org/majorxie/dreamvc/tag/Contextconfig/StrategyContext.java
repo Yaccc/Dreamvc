@@ -27,7 +27,11 @@ public class StrategyContext implements FixableConfig {
 	public StrategyContext(FilterConfig filterConfig) {
 		this(null,filterConfig);
 	}
-	
+	/**
+	 * 不然外部实例化，防止意外错误
+	 * @param servletConfig
+	 * @param filterConfig
+	 */
 	private StrategyContext(ServletConfig servletConfig,FilterConfig filterConfig) {
 		this.filterConfig =filterConfig;
 		this.servletConfig=servletConfig;
