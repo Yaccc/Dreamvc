@@ -186,7 +186,7 @@ public class Dispatcher {
 				handleResult(req,resp,result);
 			} catch (Exception e) {	
 				handleException(req,resp,e);
-				log.warn("��׽���쳣");
+				log.warn("throws Exception");
 						
 			}finally{
 				  ActionContext.removeActionContext();
