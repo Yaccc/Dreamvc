@@ -119,7 +119,7 @@ public class Dispatcher {
 		 * @return
 		 * @throws Exception
 		 */
-	  public boolean service(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
+ protected boolean service(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
 		  String url=req.getServletPath();
 		  URI uri=new URI(url);
 		  if(!uri_action.containsKey(uri)){
@@ -289,7 +289,7 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * ����controllers
+	 * controllers
 	 * @param controllerBean
 	 */
 	private void initControllerHander(List<Object> controllerBean) {
@@ -299,8 +299,7 @@ public class Dispatcher {
 			Object obj=controllerBean.get(i);
 			addUrlMather(obj);		
 		}
-	
-		
+
 	}
 	private void addUrlMather(Object obj) {
 		Class clazz=obj.getClass();
