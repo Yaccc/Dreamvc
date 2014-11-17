@@ -119,53 +119,56 @@ public class Dispatcher {
 		 * @return
 		 * @throws Exception
 		 */
- protected boolean service(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
-		  String url=req.getServletPath();
-		  URI uri=new URI(url);
-		  if(!uri_action.containsKey(uri)){
-			  return false;
-		  }
-		  Execution execution=null;
-		  Action action=uri_action.get(uri);
-		 
-		  Method method=action.getMethod();
-		  Map<String, Object[]> parameters_name_args=req.getParameterMap();
-		  if(parameters_name_args.size()==0){
-			  execution=new Execution(action, null);
-		  }else{
-		  
-		  Class<?>[] clazz=method.getParameterTypes();
-		  List<String> ParametersName;
-		try {
-			ParametersName = getMethodParametersName(CodeEnhancement, method);
-		} catch (Exception e1) {
-			throw new ServletException(e1);
+	protected boolean service(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String url = req.getServletPath();
+		URI uri = new URI(url);
+		if (!uri_action.containsKey(uri)) {
+			return false;
 		}
-		  Object[] parameters=new Object[clazz.length];
-		  
-		  for (int i = 0; i <ParametersName.size(); i++) {
-			String name=ParametersName.get(i);
-			String args=(String) parameters_name_args.get(name)[0];
-			if(clazz[i].equals(String.class)){
-				parameters[i]=args;
-			}else{
-				try {				
-				parameters[i]=switcherFactory.switcher(clazz[i], args);
-				} catch (Exception e) {
-					resp.sendError(400);
-					break;
+		Execution execution = null;
+		Action action = uri_action.get(uri);
+
+		Method method = action.getMethod();
+		Map<String, Object[]> parameters_name_args = req.getParameterMap();
+		if (parameters_name_args.size() == 0) {
+			execution = new Execution(action, null);
+		} else {
+
+			Class<?>[] clazz = method.getParameterTypes();
+			List<String> ParametersName;
+			try {
+				ParametersName = getMethodParametersName(CodeEnhancement,
+						method);
+			} catch (Exception e1) {
+				throw new ServletException(e1);
+			}
+			Object[] parameters = new Object[clazz.length];
+
+			for (int i = 0; i < ParametersName.size(); i++) {
+				String name = ParametersName.get(i);
+				String args = (String) parameters_name_args.get(name)[0];
+				if (clazz[i].equals(String.class)) {
+					parameters[i] = args;
+				} else {
+					try {
+						parameters[i] = switcherFactory
+								.switcher(clazz[i], args);
+					} catch (Exception e) {
+						resp.sendError(400);
+						break;
+					}
 				}
 			}
-		  }  
-		  execution=new Execution(action, parameters);
-		  }
-		if(execution!=null){
-			interceptors=regexpActionAndInterceptor(uri);
-			handleExecution(req,resp,execution);
+			execution = new Execution(action, parameters);
 		}
-		  
-		return execution!=null;
-  }
+		if (execution != null) {
+			interceptors = regexpActionAndInterceptor(uri);
+			handleExecution(req, resp, execution);
+		}
+
+		return execution != null;
+	}
 	  /**
 	   *
 	   * @param req
