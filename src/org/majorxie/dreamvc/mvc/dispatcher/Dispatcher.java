@@ -48,7 +48,7 @@ import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 /**
  * 
  * dispater
- * update 2014-10-31
+ * update 2014-11-17
  * @author xiezhaodong
  *
  */
@@ -77,9 +77,9 @@ public class Dispatcher {
 		
 	}
 	/**
-	 * һЩ��ʼ������ controller/Interceptor/ģ��ļ��ص�
-	 * @param config context����
-	 * @throws Exception �׳����е��쳣
+	 *  controller/Interceptor/
+	 * @param config context
+	 * @throws Exception
 	 */
 	private void initProxy(FixableConfig config)throws Exception {
 		
@@ -101,11 +101,11 @@ public class Dispatcher {
 		factory.init(servletContext);
 		List<Object> controllerBean=factory.getControllers();
 		List<Object> InterceptorBeans=factory.getInterceptors();	
-		//controller/interceptor�ļ���
+		//controller/interceptor
 		initControllerHander(controllerBean);
 		initInterceptorHander(InterceptorBeans);
 		
-		//ģ�����
+		
 		initTemplates(config);
 		
 	}
@@ -114,44 +114,44 @@ public class Dispatcher {
 		
 		
 		/**
-		 * ����·��
+		 *
 		 * @param req
 		 * @param resp
 		 * @return
 		 * @throws Exception
 		 */
 	  public boolean service(HttpServletRequest req, HttpServletResponse resp) throws  ServletException, IOException{
-		  String url=req.getServletPath();//�õ�·����/user/login
+		  String url=req.getServletPath();
 		  URI uri=new URI(url);
-		  if(!uri_action.containsKey(uri)){//���û��ƥ�䷵��false
+		  if(!uri_action.containsKey(uri)){
 			  return false;
 		  }
 		  Execution execution=null;
-		  Action action=uri_action.get(uri);//�õ���url��Ӧ�ķ�����װ����
+		  Action action=uri_action.get(uri);
 		 
-		  Method method=action.getMethod();//�õ�����
+		  Method method=action.getMethod();
 		  Map<String, Object[]> parameters_name_args=req.getParameterMap();
 		  if(parameters_name_args.size()==0){
 			  execution=new Execution(action, null);
 		  }else{
-		  //���get����
+		  
 		  Class<?>[] clazz=method.getParameterTypes();
 		  List<String> ParametersName;
 		try {
-			ParametersName = getMethodParametersName(CodeEnhancement, method);//�õ��÷����Ĳ�������
+			ParametersName = getMethodParametersName(CodeEnhancement, method);
 		} catch (Exception e1) {
 			throw new ServletException(e1);
 		}
-		  Object[] parameters=new Object[clazz.length];//Ҫ���뵽ִ�з����еĿɱ����
+		  Object[] parameters=new Object[clazz.length];
 		  
 		  for (int i = 0; i <ParametersName.size(); i++) {
-			String name=ParametersName.get(i);//�õ���������
-			String args=(String) parameters_name_args.get(name)[0];//�����Ӧ�����ֵõ�����
+			String name=ParametersName.get(i);
+			String args=(String) parameters_name_args.get(name)[0];
 			if(clazz[i].equals(String.class)){
 				parameters[i]=args;
 			}else{
 				try {				
-				parameters[i]=switcherFactory.switcher(clazz[i], args);//ת����ʵ�������
+				parameters[i]=switcherFactory.switcher(clazz[i], args);
 				} catch (Exception e) {
 					resp.sendError(400);
 					break;
@@ -161,7 +161,7 @@ public class Dispatcher {
 		  execution=new Execution(action, parameters);
 		  }
 		if(execution!=null){
-			interceptors=regexpActionAndInterceptor(uri);//�õ���ԓurl����������
+			interceptors=regexpActionAndInterceptor(uri);
 			handleExecution(req,resp,execution);
 		}
 		  
@@ -185,15 +185,15 @@ public class Dispatcher {
 				chain.exeAfterInterceptor();
 				handleResult(req,resp,result);
 			} catch (Exception e) {	
-				handleException(req,resp,e);//ִ�з����׳������쳣
+				handleException(req,resp,e);
 				log.warn("��׽���쳣");
 						
 			}finally{
-				  ActionContext.removeActionContext();//ɾ���������
+				  ActionContext.removeActionContext();
 			}
 		}
 	/**
-	   * ����Ĭ���쳣ҳ��
+	   * 
 	   * @param req
 	   * @param resp
 	 * @throws Exception 
@@ -206,7 +206,7 @@ public class Dispatcher {
 		} catch (Exception e1) {
 		throw new ServletException(e1);
 		}
-		 //Ĭ���쳣
+		
 		}
 	/**
 	 * ������
@@ -232,17 +232,17 @@ public class Dispatcher {
 			
 		}
 	/**
-	 * //ƥ������·������Ӧ��action������ʼ��interceptors
+	 *
 	 */
 	private Interceptor[] regexpActionAndInterceptor(URI uri) {
 		List<Interceptor> list_inters=uri.getMatchedInterceptor(interceptor_uri);
 		  
-		Interceptor[] interceptors= list_inters.toArray(new Interceptor[list_inters.size()]);// ת��������
+		Interceptor[] interceptors= list_inters.toArray(new Interceptor[list_inters.size()]);
 		Arrays.sort(interceptors,new Comparator<Interceptor>() {
 			  public int compare(Interceptor o1, Interceptor o2) {
 				String url_1=o1.getClass().getAnnotation(InterceptorURI.class).url();
 				String url_2=o2.getClass().getAnnotation(InterceptorURI.class).url();
-				if(url_1.length()>url_2.length()){//�L������ǰ��
+				if(url_1.length()>url_2.length()){
 					return -1;
 				}
 				
@@ -256,7 +256,7 @@ public class Dispatcher {
 		return interceptors;
 	}
 	/**
-	 * ����ģ��
+	 * 
 	 * @param config
 	 */
 	private void initTemplates(FixableConfig config) throws Exception{
@@ -264,7 +264,7 @@ public class Dispatcher {
 		String template=config.getInitParameter("template");
 		if("".equals(template)||template==null){
 			log.info("You don't have template Parameters ,we will user default JSP template");	
-			template=JSPTEMPLATE;//Ĭ��jspģ��
+			template=JSPTEMPLATE;
 		} 
 		
 		TemplateFactory templateFactory=FactoryHelper.getInstance().createTemplateFactory(template);
@@ -275,16 +275,16 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * Interceptor����
+	 * Interceptor
 	 * @param interceptorBeans
 	 */
 	private void initInterceptorHander(List<Object> interceptorBeans) {
 		int size=interceptorBeans.size();
 		for (int i = 0; i <size; i++) {
-			Interceptor interceptor=(Interceptor) interceptorBeans.get(i);//�õ�interceptor
+			Interceptor interceptor=(Interceptor) interceptorBeans.get(i);
 			InterceptorURI interceptorURI=interceptor.getClass().getAnnotation(InterceptorURI.class);
-			String annotationUri=interceptorURI.url();//�õ�����·��
-			interceptor_uri.put(annotationUri, interceptor);//������·�������Interceptor��������
+			String annotationUri=interceptorURI.url();
+			interceptor_uri.put(annotationUri, interceptor);
 		}
 	
 	}
@@ -298,7 +298,7 @@ public class Dispatcher {
 		int size=controllerBean.size();
 		for (int i = 0; i < size; i++) {			
 			Object obj=controllerBean.get(i);
-			addUrlMather(obj);//��������uri��������			
+			addUrlMather(obj);		
 		}
 	
 		
@@ -308,12 +308,12 @@ public class Dispatcher {
 		Method[] method=clazz.getMethods();
 		
 		for (int i = 0; i < method.length; i++) {
-			if(isLegalMethod(method[i])){//�÷����Ƿ��ϱ�׼ 
-				//�õ�ע��ֵ,Ҳ���Ƿ�����������·��
+			if(isLegalMethod(method[i])){
+				
 				 String annotation=method[i].getAnnotation(RequestURI.class).value();
 				 Action action=new Action(obj, method[i]);
 				 URI uri=new URI(annotation);
-				 uri_action.put(uri, action);//��·���Ͷ����Ѿ��������뵽һ��map����				 
+				 uri_action.put(uri, action);				 
 			}
 			
 		}
@@ -321,32 +321,32 @@ public class Dispatcher {
 	}
 
 	/**
-	 * ���������Ƿ�Ϸ�
-	 * @param method ����
+	 * 
+	 * @param method 
 	 * @return
 	 */
 	private boolean isLegalMethod(Method method) {
 		RequestURI requestURI=method.getAnnotation(RequestURI.class);
-		//����Ϊ��
+		
 		if(requestURI==null||requestURI.value().length()==0){
 			return false;
 		}
-		//����Ϊ��̬����
+		
 		if(Modifier.isStatic(method.getModifiers())){
 			
 			return false;
 		}		
-		Class<?>[] putParameters=method.getParameterTypes();//�õ����в���
-		//���÷����Ĳ����Ƿ�Ϸ�
+		Class<?>[] putParameters=method.getParameterTypes();
+		
 		for (Class<?> class1 : putParameters) {
 			if(!switcherFactory.isLegalMethod(class1)){			
 				return false;
 			}
 		}
-		 Class<?> retType = method.getReturnType();//�õ��÷����ķ���ֵ
-	     if (retType.equals(void.class)//Ϊvoid����String����
+		 Class<?> retType = method.getReturnType();
+	     if (retType.equals(void.class)
 	                || retType.equals(String.class)
-	                || Renderer.class.isAssignableFrom(retType)//�Ƿ���render���������ķ�������
+	                || Renderer.class.isAssignableFrom(retType)
 	        ){
 	    	
 	    	 return true;
@@ -357,9 +357,9 @@ public class Dispatcher {
 		return false;
 	}
 	/**
-	 * �õ������Ĳ������� ��������
-	 * @param CodeEnhancement �ֽ������ӷ�ʽѡ��ʹ��gjavassist����LocalVariableTableParameterNameDiscoverer
-	 * @param method Ҫ�õ��������ֵķ���
+	 *
+	 * @param CodeEnhancement LocalVariableTableParameterNameDiscoverer
+	 * @param method 
 	 * @return List<String>
 	 * @throws Exception 
 	 */
