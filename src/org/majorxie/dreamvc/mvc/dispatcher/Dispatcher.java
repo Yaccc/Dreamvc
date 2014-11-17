@@ -43,7 +43,6 @@ import org.majorxie.dreamvc.tag.Action;
 import org.majorxie.dreamvc.tag.URI;
 import org.majorxie.dreamvc.tag.Contextconfig.FixableConfig;
 import org.majorxie.dreamvc.template.TemplateFactory;
-import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 
 /**
  * 
@@ -88,14 +87,14 @@ public class Dispatcher {
 			throw new NoParamterException("Missing init parameter <container>.");	
 		}
 		
-		
+		/*
 		 CodeEnhancement=config.getInitParameter("CodeEnhancement");
 		if(CodeEnhancement==null||CodeEnhancement.equals("")){
 			throw new NoParamterException("Missing init parameter <CodeEnhancement>.");	
 		}	
 		if(!CodeEnhancement.equals("SpringAsm")&!CodeEnhancement.equals("javassist")){
 			throw new NoParamterException("You must get a right codeEnhancement handler like SpringAsm if your IOC is Spring");	
-		}
+		}*/
 		
 		IocFactory factory=FactoryHelper.getInstance().createIocFactory(IocName);
 		factory.init(servletContext);
@@ -365,7 +364,7 @@ public class Dispatcher {
 	 */
 	private List<String> getMethodParametersName(String CodeEnhancement,Method method) throws Exception{
 		List<String> name=new LinkedList<String>();
-		if(CodeEnhancement.equals("javassist")){
+		
 			try {
 				Class clazz = method.getDeclaringClass();  
 				String methodName = method.getName();  
@@ -381,21 +380,12 @@ public class Dispatcher {
 		        int pos = Modifier.isStatic(cm.getModifiers()) ? 0 : 1;  
 		        for (int i = 0; i < paramNames.length; i++)  
 		            name.add(attr.variableName(i + pos));  
-		       return name;
+		      
 			} catch (Exception e) {
 				throw e;
 			}
-		}else{
-			LocalVariableTableParameterNameDiscoverer u =   
-	            new LocalVariableTableParameterNameDiscoverer();  
-	        String[] params = u.getParameterNames(method);  
-	        for (int i = 0; i < params.length; i++) {  
-	            name.add(params[i]); 
-	        }  
-	        return name;
-			
-		}
 		
+			 return name;
 	}
 	
 
