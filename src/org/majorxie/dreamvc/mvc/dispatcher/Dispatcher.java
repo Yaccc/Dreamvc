@@ -49,7 +49,7 @@ import org.majorxie.dreamvc.template.TemplateFactory;
  * dispater
  * update 2014-11-17
  * @author xiezhaodong
- *
+ *22:52
  */
 public class Dispatcher {
 	private final Log log=LogFactory.getLog(getClass());
