@@ -26,7 +26,7 @@ public abstract class TemplateFactory {
 	public abstract void init(StrategyConfig config);
 	
 	/**
-	 * ����ģ��
+	 *加载模板
 	 * @param path
 	 *  抛出异常
 	 */
