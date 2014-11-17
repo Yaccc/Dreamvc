@@ -83,7 +83,7 @@ public class Dispatcher {
 	private void initProxy(FixableConfig config)throws Exception {
 		
 		String IocName=config.getInitParameter("container");
-		if(IocName==null||IocName.equals("")){
+		if(IocName==null||"".equals(IocName)){
 			throw new NoParamterException("Missing init parameter <container>.");	
 		}
 		
