@@ -130,7 +130,7 @@ public class Dispatcher {
 		Action action = uri_action.get(uri);
 
 		Method method = action.getMethod();
-		Map<String, Object[]> parameters_name_args = req.getParameterMap();
+		Map<String, String[]> parameters_name_args = req.getParameterMap();
 		if (parameters_name_args.size() == 0) {
 			execution = new Execution(action, null);
 		} else {
