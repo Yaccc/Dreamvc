@@ -2,7 +2,11 @@ package org.majorxie.dreamvc.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+/**
+ * æ‹¦æˆªå™¨é“¾
+ * @author xiezhaodong
+ *
+ */
 public class InterceptorChain {
 	
 	private Execution execution;
@@ -26,12 +30,13 @@ public class InterceptorChain {
 		this.interceptors = interceptors;
 	}
 	/**
-	 * Ö´ĞĞÍêÖ®ºó·µ»Ø
+	 * Ö´æ‰§è¡Œæ‹¦æˆªå™¨
 	 * @return
 	 * @throws Exception
 	 */
  public	Object exeInterceptor()throws Exception{
 		boolean flag=true;
+		//ä¾æ¬¡æ‰§è¡Œï¼Œé‡åˆ°falseè·³å‡ºï¼Œå¦åˆ™æ”¾å¼€æ‰§è¡Œä¸‹ä¸€ä¸ªæ‹¦æˆªå™¨
 		for (int i = 0; i < interceptors.length; i++) {
 			index=i;
 			if(!interceptors[i].doInterceptor()){
@@ -40,6 +45,7 @@ public class InterceptorChain {
 			}
 			
 		}
+		//æ²¡æœ‰é‡åˆ°falseæ‰æ‰§è¡Œæ–¹æ³•
 		if(flag){
 			Object result=execution.execute();
 			return result;
@@ -48,10 +54,10 @@ public class InterceptorChain {
 		
 	}
  /**
-  * Ö´ĞĞºóĞø·½·¨
+  * æ‰§è¡Œæ–¹æ³•å
   */
  public void exeAfterInterceptor(){
-	 if(interceptors.length!=0){//ÓĞÀ¹½ØÆ÷ÔÚÖ´ĞĞ£¬Èç¹ûÃ»ÓĞÀ¹½ØÆ÷index»¹ÊÇ0
+	 if(interceptors.length!=0){//æœ‰æ‹¦æˆªå™¨æ‰æ‰§è¡Œï¼Œä¸ç„¶ä¼šæŠ›æ•°ç»„è¶Šç•Œ
 	 for (int i = index; i>= 0; i--) {
 			interceptors[i].afterInterceptor();
 		}

@@ -4,22 +4,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * À¹½ØÆ÷tag
+ * æ‹¦æˆªå™¨æ¥å£
  * @author xiezhaodong
  *2014-10-27
  */
 public interface Interceptor {
 	/**
-	 * Ïú»Ù
+	 * é”€æ¯
 	 */
 	void destory();
 	
 	/**
-	 * ³õÊ¼»¯
+	 * åˆå§‹åŒ–
 	 */
 	void init();
 	/**
-	 * ÔİÊ±¶¨ÒåµÄ½Ó¿Ú
+	 * æ‰§è¡Œintercptor
 	 */
 	boolean doInterceptor();
 	

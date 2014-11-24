@@ -2,7 +2,7 @@ package org.majorxie.dreamvc.interceptor;
 
 import org.majorxie.dreamvc.tag.Action;
 /**
- * ·â×°¶ÔÏóÏà¹Ø·½·¨ºÍ²ÎÊýµÄÀà
+ * æ‰§è¡Œæ–¹æ³•
  * @author xiezhaodong
  *2014-11-10
  */
@@ -28,7 +28,7 @@ public class Execution {
 		this.args = args;
 	}
 	/**
-	 * ·µ»ØÖ´ÐÐ·½·¨µÄº¯Êý
+	 * æ‰§è¡ŒçœŸæ­£çš„æ–¹æ³•
 	 * @return
 	 * @throws Exception
 	 */
