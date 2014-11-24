@@ -15,7 +15,7 @@ import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
 
 /**
  * Template factory using Velocity.
- * 
+ * velocity模板工厂类
  * @author xiezhaodong
  */
 public class VelocityTemplateFactory extends TemplateFactory {
@@ -47,7 +47,7 @@ public class VelocityTemplateFactory extends TemplateFactory {
     public Template initTemplate(String path,ForwardType type)throws Exception {
         if (log.isDebugEnabled())
             log.debug("Load Velocity template '" + path + "'.");
-       // rtInstance.addProperty("webapp.resource.loader.path", "");
+       
         rtInstance.init(props);
         return new VelocityTemplate(
                 rtInstance.getTemplate(path, inputEncoding),
@@ -68,8 +68,12 @@ public class VelocityTemplateFactory extends TemplateFactory {
         log.info("Detect web application path: " + webAppPath);
         log.info("init VelocityTemplateFactory...");
         rtInstance = new RuntimeInstance();
+        
+        /**
+         * 使用web容器
+         */
         rtInstance.setApplicationAttribute("javax.servlet.ServletContext", config.getServletContext());
-        // read property file:
+        // read property file:加载web-inf下面的资源文件
         props = readProperties(webAppPath + "/WEB-INF/velocity.properties");
         checkProperty(props);
         try {

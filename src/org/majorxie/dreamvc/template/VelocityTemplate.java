@@ -10,7 +10,7 @@ import org.apache.velocity.io.VelocityWriter;
 
 /**
  * Template using Velocity.
- * 
+ * 集成velocity模板
  * @author xiezhaodong
  */
 public class VelocityTemplate implements Template {

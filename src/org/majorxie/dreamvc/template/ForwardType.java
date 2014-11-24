@@ -1,6 +1,6 @@
 package org.majorxie.dreamvc.template;
 /**
- * Ìø×ª·½·¨Ã¶¾Ù
+ *è·³è½¬ç±»åž‹æžšä¸¾
  * @author xiezhaodong
  *
  */
