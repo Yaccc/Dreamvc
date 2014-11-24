@@ -9,7 +9,7 @@ import javax.servlet.ServletContext;
 public interface StrategyConfig {
 	
 	/**
-	 * µÃµ½Ö¸¶¨ÁË²ÎÊı
+	 * å¾—åˆ°åˆå§‹åŒ–å‚æ•°
 	 * @return
 	 */
 	String getInitParameter(String name);

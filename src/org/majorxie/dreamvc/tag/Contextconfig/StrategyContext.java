@@ -10,11 +10,9 @@ import javax.servlet.ServletContext;
 /**
  * 2014-10-28
  * @author xiezhaodong
- *ÅäÖÃÄ¬ÈÏÊµÏÖ
- *¶ÔÏóÊÊÅä
- *ÓĞ3¸ö¹¹Ôìº¯Êı,Ñ¡ÔñĞèÒªµÄ¹¹Ôìº¯ÊıÊµÀı»¯
- *servletconfigÓÃÓÚserlvet½øÈë
- *filterconfigÓÃÓÚfilter½øÈë
+ *ç­–ç•¥æ¨¡å¼ï¼ŒåŒ¹é…filteræˆ–è€…servlet
+ *servletconfig servlet
+ *filterconfig filter
  *
  */
 public class StrategyContext implements FixableConfig {
@@ -28,7 +26,7 @@ public class StrategyContext implements FixableConfig {
 		this(null,filterConfig);
 	}
 	/**
-	 * ²»È»Íâ²¿ÊµÀı»¯£¬·ÀÖ¹ÒâÍâ´íÎó
+	 * peivate è®¿é—®æƒé™ï¼Œé¿å…å¼‚å¸¸é”™è¯¯
 	 * @param servletConfig
 	 * @param filterConfig
 	 */

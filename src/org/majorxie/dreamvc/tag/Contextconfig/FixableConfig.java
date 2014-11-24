@@ -1,7 +1,4 @@
 package org.majorxie.dreamvc.tag.Contextconfig;
-
-import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
-
 /**
  * 2014-10-28
  * @author xiezhaodong
@@ -10,7 +7,7 @@ import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
 public interface FixableConfig extends StrategyConfig {
 	
 	/**
-	 * 得到所有的参数
+	 * 寰楀埌鏁扮粍
 	 * @return
 	 */
 	String[] getInitParameters();
