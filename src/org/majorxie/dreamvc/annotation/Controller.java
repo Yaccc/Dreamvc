@@ -6,12 +6,12 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 注解的tag
+ 	controller娉ㄨВ
  * @author xiezhaodong
  *
  */
 
-@Target(ElementType.TYPE)//标注为控制器哦
+@Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Controller {
 
