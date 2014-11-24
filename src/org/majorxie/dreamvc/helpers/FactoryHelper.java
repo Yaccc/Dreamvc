@@ -6,7 +6,7 @@ import org.majorxie.dreamvc.ioc.factory.IocFactory;
 import org.majorxie.dreamvc.template.TemplateFactory;
 
 /**
- * µ¥ÀıÄ£Ê½,²úÉú¶ÔÓ¦µÄÈİÆ÷
+ * å·¥å‚helperç±»
  * 
  * @author xiezhaodong 2014-10-29
  */
@@ -15,7 +15,7 @@ public class FactoryHelper {
 	private FactoryHelper() {
 	}
 
-	private static class SingletonClassInstance {S
+	private static class SingletonClassInstance {
 		private static final FactoryHelper instance = new FactoryHelper();
 	}
 
@@ -24,7 +24,7 @@ public class FactoryHelper {
 	}
 
 	/**
-	 * 
+	 * iocç”Ÿäº§å·¥å‚
 	 * @param clazzName
 	 *            org.majorxie.dreamvc.ioc.factory.SpringIocFactory
 	 * @return
@@ -34,13 +34,13 @@ public class FactoryHelper {
 			throws Exception {
 		IocFactory iocFactory = null;
 		Class clazz=null;
-		//¿ÉÄÜÎÄ¼şÕÒ²»µ½
+		//æ˜¯å¦èƒ½å¤Ÿæ‰¾åˆ°è¯¥ç±»
 		try {
 			clazz= Class.forName(clazzName);
 		} catch (Exception e) {
 			throw new NoIocInstanceException("No IOC container in your project,check your ioc class file url");
 		}
-		//²»ÊôÓÚ×ÓÀà(ÊÇ·ñÄÜ¹»Ç¿ÖÆ×ª»»)
+		//æ˜¯å¦å±äºè¯¥å­ç±»
 		Object obj = clazz.newInstance();
 		if (obj instanceof IocFactory) {
 			iocFactory = (IocFactory) obj;
@@ -55,8 +55,8 @@ public class FactoryHelper {
 	
 	
 	/**
-	 * ´´½¨Ä£°å¹¤³§
-	 * @param clazzName ÀàÈ«°üÃû
+	 * æ¨¡æ¿ç”Ÿäº§å·¥å‚
+	 * @param clazzName ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½
 	 * @return
 	 */
 	public static TemplateFactory createTemplateFactory(String clazzName)throws Exception{
