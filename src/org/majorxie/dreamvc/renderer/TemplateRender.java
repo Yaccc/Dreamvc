@@ -45,6 +45,8 @@ public class TemplateRender extends Renderer   {
 	@Override
 	public void render(ServletContext context, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
+		
+		//dispatcher中得到加载的是什么模板，然后执行hadnle方法
 		TemplateFactory.getInstance().initTemplate(path, type).handleRender(request, response, models);
 	}
 

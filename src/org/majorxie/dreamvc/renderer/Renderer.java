@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Renderer object to indicate how to render the http response.
- * 
+ * 如果返回模板的抽象模板类
  * @author xiezhaodong
  * 2014-11-9
  */
