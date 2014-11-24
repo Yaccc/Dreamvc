@@ -11,7 +11,7 @@ import org.majorxie.dreamvc.helpers.StringHeplers;
 import test.T;
 
 /**
- *¼ì²â¹¤³§
+ *æ•°æ®ç±»å‹è½¬æ¢å·¥å‚
  * @author xiezhaodong
  *
  */
@@ -25,7 +25,7 @@ public class SwitcherFactory {
     public SwitcherFactory() {
     	loadParameters();
     }
-    //¼ÓÔØ»ù±¾Êı¾İÀàĞÍ
+    //åŠ è½½8ä¸­åŸºæœ¬ç±»å‹
 	private void loadParameters() {
 			Switcher<?> switcher = null;
 			switcher =  new SwitcherSupport.BooleanSwitcher();
@@ -64,7 +64,7 @@ public class SwitcherFactory {
 	
 	
 	/**
-	 * String ºÍ»ù±¾Êı¾İÀàĞÍµÄ×ª»»
+	 * è½¬æ¢åŸºæœ¬æ•°æ®ç±»å‹ä¸ºæŒ‡å®šçš„classç±»å‹
 	 * @param clazz
 	 * @param s
 	 * @return
@@ -76,7 +76,7 @@ public class SwitcherFactory {
 	}
 	
 	/**
-	 * ÊÇ·ñÊôÓÚ»ù±¾Êı¾İÀàĞÍ»òÕßStirng
+	 * æ˜¯å¦ç¬¦åˆå®ç°çš„åŸºæœ¬æ•°æ®ç±»å‹å‘¢
 	 * @param clazz class
 	 * @return
 	 */
@@ -85,7 +85,7 @@ public class SwitcherFactory {
 	}
 	
 	/**
-	 * ·½·¨²ÎÊıÊÇ·ñºÏ·¨£¬°üÀ¨ÊÇ·ñÊÇ»ù±¾Êı¾İÀàĞÍ£¬»òÕßÊÇbean¶ÔÏó(×Ö¶Î±ØĞëÒªÇóÍ¬Ê±ÓµÓĞsetºÍget·½·¨)
+	 * è¯¥æ–¹æ³•æ˜¯å¦æ˜¯åˆæ³•çš„ç±»å‹ï¼Œå¦‚æœæ˜¯å®ä½“ç±»åˆ™åˆ¤æ–­æ˜¯å¦æœ‰å¯¹åº”çš„setæˆ–è€…getæ–¹æ³•
 	 * @param clazz clazz
 	 * @return boolean
 	 * @throws Exception
@@ -93,10 +93,10 @@ public class SwitcherFactory {
 	public boolean isLegalMethod(Class<?> clazz) {
 		if(clazz.equals(String.class)||map.containsKey(clazz)){
 			return true;
-		}else{//¿ÉÄÜÊÇ±íµ¥¶ÔÏó
+		}else{
 			boolean returnFlag=false;
 			Field[] field=clazz.getFields();
-			//¼ì²âÊÇ·ñ×Ö¶ÎÍ¬Ê±ÓµÓĞsetºÍget×Ö¶Î
+			//
 			for (Field field2 : field) {
 				String name=field2.getName();
 				try {
@@ -114,12 +114,7 @@ public class SwitcherFactory {
 		
 	}
 	
-	
-//	public static void main(String[] args) {
-//		String s="12";
-//		SwitcherFactory factory=new SwitcherFactory();
-//		System.out.println(factory.switcher(Float.class, s).getClass());
-//	}
+
  
  
 }
