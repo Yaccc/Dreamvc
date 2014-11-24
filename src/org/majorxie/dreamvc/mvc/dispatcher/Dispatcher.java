@@ -66,7 +66,7 @@ public class Dispatcher {
 		this.servletContext=config.getServletContext();
 		
 		try {
-			initProxy(config);
+			initProxy(config);//初始化
 			log.info("init controllers and control");
 		} catch (ServletException e) {
 			throw e;
@@ -81,7 +81,9 @@ public class Dispatcher {
 	 * @throws Exception
 	 */
 	private void initProxy(FixableConfig config)throws Exception {
-		
+		/*
+		 * 初始化容器类型
+		 * */
 		String IocName=config.getInitParameter("container");
 		if(IocName==null||"".equals(IocName)){
 			throw new NoParamterException("Missing init parameter <container>.");	
@@ -95,16 +97,14 @@ public class Dispatcher {
 		if(!CodeEnhancement.equals("SpringAsm")&!CodeEnhancement.equals("javassist")){
 			throw new NoParamterException("You must get a right codeEnhancement handler like SpringAsm if your IOC is Spring");	
 		}*/
-		
+		//拿到ioc工厂，得到controller和interceptor类的集合
 		IocFactory factory=FactoryHelper.getInstance().createIocFactory(IocName);
 		factory.init(servletContext);
 		List<Object> controllerBean=factory.getControllers();
 		List<Object> InterceptorBeans=factory.getInterceptors();	
-		//controller/interceptor
+		//依次加载controller、interceptor和返回模板类型
 		initControllerHander(controllerBean);
-		initInterceptorHander(InterceptorBeans);
-		
-		
+		initInterceptorHander(InterceptorBeans);	
 		initTemplates(config);
 		
 	}
@@ -114,57 +114,60 @@ public class Dispatcher {
 		
 		/**
 		 *
-		 * @param req
+		 *
+		 *servlet或者filter将要调用的真正的方法
+		 * @param req  
 		 * @param resp
-		 * @return
+		 * @return 是否有路径映射
 		 * @throws Exception
 		 */
 	protected boolean service(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
-		String url = req.getServletPath();
-		URI uri = new URI(url);
+		String url = req.getServletPath();//得到serlvetr请求路径比如/login/check.do
+		URI uri = new URI(url);//得到uri包装对象，判断controller的uri包装对象中是否有该映射
 		if (!uri_action.containsKey(uri)) {
 			return false;
 		}
 		Execution execution = null;
-		Action action = uri_action.get(uri);
+		Action action = uri_action.get(uri); //拿到跟uri封装在一起的action对象
 
-		Method method = action.getMethod();
-		Map<String, String[]> parameters_name_args = req.getParameterMap();
-		if (parameters_name_args.size() == 0) {
+		Method method = action.getMethod();  
+		Map<String, String[]> parameters_name_args = req.getParameterMap();//得到参数列表，也就是传进来的参数
+		if (parameters_name_args.size() == 0) {//如果参数为空
 			execution = new Execution(action, null);
 		} else {
 
-			Class<?>[] clazz = method.getParameterTypes();
+			Class<?>[] clazz = method.getParameterTypes();//得到形参class对象
 			List<String> ParametersName;
 			try {
-				ParametersName = getMethodParametersName(CodeEnhancement,
+				ParametersName = getMethodParametersName(CodeEnhancement,//得到方法中形参的名字
 						method);
 			} catch (Exception e1) {
 				throw new ServletException(e1);
 			}
-			Object[] parameters = new Object[clazz.length];
-
+			Object[] parameters = new Object[clazz.length];//依次装参数
+			//根据形参的名字从map中找到值
 			for (int i = 0; i < ParametersName.size(); i++) {
 				String name = ParametersName.get(i);
 				String args = (String) parameters_name_args.get(name)[0];
 				if (clazz[i].equals(String.class)) {
-					parameters[i] = args;
+					parameters[i] = args;//如果是STring的话，直接赋值
 				} else {
 					try {
-						parameters[i] = switcherFactory
+						parameters[i] = switcherFactory//通过转换类进行适配类的转换
 								.switcher(clazz[i], args);
 					} catch (Exception e) {
-						resp.sendError(400);
+						resp.sendError(400);//参数错误返回400
 						break;
 					}
 				}
 			}
 			execution = new Execution(action, parameters);
 		}
+		//根据相应的uri找到对应的interceptor
 		if (execution != null) {
 			interceptors = regexpActionAndInterceptor(uri);
-			handleExecution(req, resp, execution);
+			handleExecution(req, resp, execution);//执行结果
 		}
 
 		return execution != null;
@@ -178,11 +181,11 @@ public class Dispatcher {
 	   */
 	  void handleExecution(HttpServletRequest req,
 				HttpServletResponse resp, Execution execution)throws  ServletException, IOException {
-		  ActionContext.setActionContext(servletContext, req, resp);
+		  ActionContext.setActionContext(servletContext, req, resp);//把servlet上下文放入actioncontext中
 		  
-		   InterceptorChain chain=new InterceptorChain(execution, interceptors);
+		   InterceptorChain chain=new InterceptorChain(execution, interceptors);//将得到的拦截器封装成一个拦截器链
 		   
-			try {
+			try {//分别执行前后方法
 				Object result=chain.exeInterceptor();
 				chain.exeAfterInterceptor();
 				handleResult(req,resp,result);
@@ -202,7 +205,7 @@ public class Dispatcher {
 	   */
 	 void handleException(HttpServletRequest req,
 				HttpServletResponse resp,Exception e) throws  ServletException, IOException {
-		DefaultExceptionHandler defaultExceptionHandler=new DefaultExceptionHandler();
+		DefaultExceptionHandler defaultExceptionHandler=new DefaultExceptionHandler();//默认的异常类
 		try {
 			defaultExceptionHandler.handle(req, resp, e);
 		} catch (Exception e1) {
@@ -221,7 +224,7 @@ public class Dispatcher {
 			if(result==null){
 				return;
 			}			
-			if(result instanceof Renderer){
+			if(result instanceof Renderer){//如果返回的是模板
 				Renderer r=(Renderer) result;
 				r.render(servletContext, req, resp);
 				return ;
@@ -234,12 +237,13 @@ public class Dispatcher {
 			
 		}
 	/**
-	 *
+	 *匹配拦截器uri和方法uri是否相匹配
 	 */
 	private Interceptor[] regexpActionAndInterceptor(URI uri) {
 		List<Interceptor> list_inters=uri.getMatchedInterceptor(interceptor_uri);
 		  
 		Interceptor[] interceptors= list_inters.toArray(new Interceptor[list_inters.size()]);
+		//对拦截器排序，相似度大的排在前面执行
 		Arrays.sort(interceptors,new Comparator<Interceptor>() {
 			  public int compare(Interceptor o1, Interceptor o2) {
 				String url_1=o1.getClass().getAnnotation(InterceptorURI.class).url();
@@ -256,9 +260,9 @@ public class Dispatcher {
 		
 		  }); 
 		return interceptors;
-	}
+	} 
 	/**
-	 * 
+	 * 初始化返回模板
 	 * @param config
 	 */
 	private void initTemplates(FixableConfig config) throws Exception{
@@ -271,13 +275,13 @@ public class Dispatcher {
 		
 		TemplateFactory templateFactory=FactoryHelper.getInstance().createTemplateFactory(template);
 		templateFactory.init(config);
-		templateFactory.setInstance(templateFactory);
+		templateFactory.setInstance(templateFactory);//设置模板类型
 		
 		
 	}
 	
 	/**
-	 * Interceptor
+	 * 得到interceptor并将interceptor和uri绑定起来
 	 * @param interceptorBeans
 	 */
 	private void initInterceptorHander(List<Object> interceptorBeans) {
@@ -292,7 +296,7 @@ public class Dispatcher {
 	}
 	
 	/**
-	 * controllers
+	 * 初始化controllers
 	 * @param controllerBean
 	 */
 	private void initControllerHander(List<Object> controllerBean) {
@@ -304,6 +308,10 @@ public class Dispatcher {
 		}
 
 	}
+	/**
+	 * 将uri和方法类，方法本身绑定
+	 * @param obj
+	 */
 	private void addUrlMather(Object obj) {
 		Class clazz=obj.getClass();
 		Method[] method=clazz.getMethods();
@@ -322,18 +330,18 @@ public class Dispatcher {
 	}
 
 	/**
-	 * 
+	 * 验证方法是否合法
 	 * @param method 
 	 * @return
 	 */
 	private boolean isLegalMethod(Method method) {
 		RequestURI requestURI=method.getAnnotation(RequestURI.class);
 		
-		if(requestURI==null||requestURI.value().length()==0){
+		if(requestURI==null||requestURI.value().length()==0){//没有该注解默认不是
 			return false;
 		}
 		
-		if(Modifier.isStatic(method.getModifiers())){
+		if(Modifier.isStatic(method.getModifiers())){//不能使静态方法
 			
 			return false;
 		}		
@@ -344,6 +352,7 @@ public class Dispatcher {
 				return false;
 			}
 		}
+		//返回值是否是这3种
 		 Class<?> retType = method.getReturnType();
 	     if (retType.equals(void.class)
 	                || retType.equals(String.class)
@@ -359,7 +368,7 @@ public class Dispatcher {
 	}
 	/**
 	 *
-	 * @param CodeEnhancement LocalVariableTableParameterNameDiscoverer
+	 * @param 得到方法参数名字
 	 * @param method 
 	 * @return List<String>
 	 * @throws Exception 
