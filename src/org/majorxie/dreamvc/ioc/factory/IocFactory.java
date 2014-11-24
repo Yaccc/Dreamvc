@@ -8,14 +8,14 @@ import javax.servlet.ServletContext;
 
 
 /**
- *IOC ÈİÆ÷ ¹¤³§½Ó¿Ú
+ *IOC å·¥å‚
  *
  * @author xiezhaodong(majorxie@139.com)
  *2014-10-24
  */
 public interface IocFactory {
 	/**
-	 * ¼ÓÔØÈİÆ÷
+	 * åˆå§‹åŒ–
 	 * @param config
 	 */
 	void init(ServletContext context);
@@ -28,19 +28,19 @@ public interface IocFactory {
 	
 	
 	/**
-	 * µÃµ½ËùÓĞµÄcontroller¶ÔÏó
+	 * å¾—åˆ°controler
 	 * @return
 	 */
 	List<Object> getControllers()throws Exception;
 	
 	/**
-	 * ÊÇ·ñÊÇÀ¹½ØÆ÷
+	 * å¾—åˆ°interpcetor
 	 * @return
 	 */
 	List<Object> getInterceptors();
 	
 	/**
-	 * µÃµ½ÆäËû¶ÔÏó
+	 * å¾—åˆ°å…¶ä»–
 	 * @return
 	 */
 	List<Object> getOthers();

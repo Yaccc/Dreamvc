@@ -14,7 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 /**
- * SpringÈİÆ÷µÄÊµÏÖ,ÎÒÃÇÈÃspringÈ¥destoryËùÒÔ¼Ì³ĞµÄabstract
+ * springé»˜è®¤å®ç°
  * 
  * @author xiezhaodong 2014-10-25 01:34
  * 
@@ -48,8 +48,7 @@ public class SpringIocFactory extends AbstractIocFactory {
 	}
 
 	/**
-	 * Èç¹ûÊÇInterceptor»òÕßcontrollerÀà£¬»òÕßÓĞ×ÅÁ½¸öµÄ×¢½â¶¼ËãÊÇ¸ÃÀàµÄÀà
-	 * ±éÀúËùÓĞµÄbean×°ÔØµ½list
+	 * åŠ è½½beanï¼Œ
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
