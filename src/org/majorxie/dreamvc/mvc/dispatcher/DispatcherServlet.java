@@ -14,7 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.majorxie.dreamvc.tag.Contextconfig.StrategyContext;
 /**
- * dispatcherÀà£¬¸ºÔğ³õÊ¼»¯ÈÎÎñ
+ * dispatcher
  * @author xiezhaodong
  * 2014-10-28
  *
@@ -29,7 +29,9 @@ public class DispatcherServlet extends GenericServlet {
 		log.info("distory!!");
 		super.destroy(); 
 	}
-
+	/**
+	 * åŒfilterä¸€æ ·ï¼Œç­–ç•¥è¯†åˆ«åˆå§‹åŒ–
+	 */
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);

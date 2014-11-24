@@ -13,9 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.majorxie.dreamvc.tag.Contextconfig.DefaultConfigImpl;
+import org.majorxie.dreamvc.tag.Contextconfig.StrategyContext;
 /**
- * filter����
+ * filter入口
  * @author xiezhaodong
  *2014-10-31
  */
@@ -35,17 +35,22 @@ public class DispatcherFilter implements Filter{
 	        String method = req.getMethod();
 	        if ("GET".equals(method) || "POST".equals(method)) {
 	            if (!dispatcher.service(req, resp))
-	            	arg2.doFilter(req, resp);
+	            	arg2.doFilter(req, resp);//责任链，调用下一个filter
 	            return;
 	        }
 	      
 		
 	}
-
+	/**
+	 * 初始化加载，
+	 * 策略的上下文，自动适配servelt或者filter
+	 * 
+	 * 初始化dispatcher
+	 */
 	public void init(FilterConfig arg0) throws ServletException {
 		this.dispatcher=new Dispatcher();
 		log.info("filter enter start...");
-		DefaultConfigImpl config=new DefaultConfigImpl(arg0);
+		StrategyContext config=new StrategyContext(arg0);
 		dispatcher.init(config);
 			
 		
