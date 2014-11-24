@@ -3,7 +3,7 @@ package org.majorxie.dreamvc.tag;
 import java.lang.reflect.Method;
 
 /**
- * 用于封装相应的方法和参数
+ * 鏂规硶鍜岀被鐨剋arpper
  * @author xiezhaodong
  *2014-10-31
  */
@@ -33,9 +33,9 @@ public class Action {
 	}
 	/**
 	 * 
-	 * @param intsance 对象
-	 * @param method 方法
-	 * @param arguments 参数
+	 * @param intsance 锟斤拷锟斤拷
+	 * @param method 锟斤拷锟斤拷
+	 * @param arguments 锟斤拷锟斤拷
 	 */
 	public Action(Object intsance, Method method, Class<?>[] arguments) {
 		this.instance = intsance;
@@ -44,8 +44,8 @@ public class Action {
 	}
 	/**
 	 * 
-	 * @param instance 对象
-	 * @param method 方法
+	 * @param instance 锟斤拷锟斤拷
+	 * @param method 锟斤拷锟斤拷
 	 */
 	public Action(Object instance, Method method) {
 		this(instance,method,method.getParameterTypes());

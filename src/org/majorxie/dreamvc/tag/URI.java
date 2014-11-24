@@ -7,9 +7,9 @@ import java.util.Map;
 import org.majorxie.dreamvc.interceptor.Interceptor;
 
 /**
- * uri Àà
+ * uri wrapper
  * @author xiezhaodong
- *
+ *majorxie@139.com
  */
 public class URI {
 	
@@ -28,9 +28,7 @@ public class URI {
 		this.uri = uri;
 	}
 	/**
-	 * Æ¥ÅäÏàÓ¦µÄinterceptor
-	 * @param interceptor_map  ×°ÓĞinterceptorµÄmap
-	 * @return ¸ÃÇëÇóÂ·¾¶µÄÀ¹½ØÆ÷Á´
+	 * å¾—åˆ°å’Œè¯¥uriæƒ³åŒ¹é…çš„æ‹¦æˆªå™¨ç±»
 	 */
 	public List<Interceptor> getMatchedInterceptor(Map<String,Interceptor> interceptor_map){
 		List<Interceptor> list=new ArrayList<Interceptor>();
@@ -45,16 +43,18 @@ public class URI {
 	
 	
 	/**
-	 * ÅĞ¶ÏurlºÍÀ¹½ØÆ÷Â·¾¶ÊÇ·ñÏà¶ÔµÈ¼Û±ÈÈç /user/loginºÍ/user/*ÊÇÏà¶ÔµÈ¼ÛµÄ£¬¾ÍÄÜ¹»Æ¥Åä
-	 * @param url ÇëÇóurl
-	 * @param interceptors À¹½ØÆ÷url
-	 * @return Æ¥Åä³É¹¦·µ»Ø£¬·ñÔò·µ»Ønull
+	 * åŒ¹é…uri
+	 * @param urlæ–¹æ³•
+	 * @param interceptors url
+	 * @return æ˜¯å¦ä¸ºç©ºåŒ¹é…
 	 */
 public String matcher(String url,String interceptors){
 		
 		
-		if(url.equals(interceptors))return interceptors;//ÍêÈ«ÏàÍ¬		
-		if(interceptors.endsWith("/"))return null;//²»ÄÜÕâÑù½áÎ²
+		if(url.equals(interceptors))return interceptors;//å¦‚æœè¯¥uriå’Œinterceptorä¸­çš„å®Œå…¨ç›¸åŒ	
+		if(interceptors.endsWith("/"))return null;//interceptorä¸èƒ½ä»¥/ç»“å°¾ï¼Œå¦‚æœæƒ³è¡¨ç¤ºæ‰€æœ‰åº”è¯¥æ˜¯/*
+		
+		//åˆ†å¼€æ‰€æœ‰èŠ‚ç‚¹
 		String[] urlsArray=url.split("/");
 		String[] interceptorsArray=interceptors.split("/");
 		
@@ -62,14 +62,14 @@ public String matcher(String url,String interceptors){
 		if(interceptorsArray.length<urlsArray.length){
 			boolean isMatched=true;
 			if(interceptorsArray[interceptorsArray.length-1].equals("*")){
-				//Èç¹û±ÈËûurl¶Ì×îºó±ØĞëÒªÒÔ*½áÎ²
+				//è¡¨ç¤ºè¯¥æ‹¦æˆªå™¨çš„urié•¿åº¦å°äºæœ¬èº«uriï¼ŒåŒæ—¶æ˜¯ä»¥*ç»“å°¾
 			for(int i = 0; i < interceptorsArray.length; i++) {
-				if(!isMatched(urlsArray[i], interceptorsArray[i])){//ÒÔ¶ÌµÄÒ»¸öÎª±éÀú
+				if(!isMatched(urlsArray[i], interceptorsArray[i])){//ä¾æ¬¡åŒ¹é…å‰é¢çš„èŠ‚ç‚¹
 					isMatched=false;
 					break;
 				}
 			}
-				if(isMatched)return interceptors;
+				if(isMatched)return interceptors;//å‰é¢çš„èŠ‚ç‚¹ç›¸åŒï¼Œè¿”å›
 			
 			}else{		
 				return null;
@@ -78,33 +78,33 @@ public String matcher(String url,String interceptors){
 		}
 		
 		if(interceptorsArray.length==urlsArray.length){
-			//µÈÓÚ
+			//å¦‚æœé•¿åº¦ç›¸ç­‰
 			boolean isMatched=true;
-			for (int i = 0; i < interceptorsArray.length; i++) {//³¤¶È¶¼Ò»Ñù
+			for (int i = 0; i < interceptorsArray.length; i++) {//ä¾æ¬¡æ¯”è¾ƒ
 				if(!isMatched(urlsArray[i], interceptorsArray[i])){			
 					isMatched=false;
 					break;
 				}
 			}
-			if(isMatched){//Èç¹û×îºóÆ¥ÅäÍê»¹ÊÇÏàÍ¬µÄ»°		
+			if(isMatched){//ç¬¦åˆè¿”å›	
 				return interceptors;
 			}			
 		}
-	
+		//æ‹¦æˆªå™¨çš„é•¿åº¦ä¸èƒ½å¤Ÿæ¯”æ–¹æ³•ä¸Šçš„urié•¿ï¼Œé»˜è®¤ä¸åŒ¹é…
 		return null;
 	
 	}
 	/**
-	 * Æ¥ÅäÃ¿Ò»¸ö½Úµã
-	 * @param urlPart Ô­Ê¼Â·¾¶½Úµã
-	 * @param intersPart À¹½ØÂ·¾¶½Úµã
+	 *è¯¥èŠ‚ç‚¹æ˜¯å¦åŒ¹é… ç›¸åŒæˆ–è€…ä¸º*
+	 * @param urlPart Ô­Ê¼Â·ï¿½ï¿½ï¿½Úµï¿½
+	 * @param intersPart ï¿½ï¿½ï¿½ï¿½Â·ï¿½ï¿½ï¿½Úµï¿½
 	 * @return
 	 */
 	private  boolean isMatched(String urlPart,String interceptorPart){
 		return urlPart.equals(interceptorPart)||interceptorPart.equals("*");
 	}
 	
-	//ÖØĞ´hashcode()ºÍequals·½·¨£¬Òª×÷ÎªmapµÄkey
+	//è¦†ç›–hadhCODEå’Œequalsæ–¹æ³•ï¼Œå› ä¸ºè¦ä½œä¸ºmapçš„key
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
