@@ -370,7 +370,7 @@ public class Dispatcher {
 	 *
 	 * @param 得到方法参数名字
 	 * @param method 
-	 * @return List<String>
+	 * @return 返回参数列表
 	 * @throws Exception 
 	 */
 	private List<String> getMethodParametersName(String CodeEnhancement,Method method) throws Exception{
