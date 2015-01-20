@@ -12,135 +12,143 @@ A simple and support the restful structure of the Java MVC framework, I have lit
     dreamvc可以集成任何ioc框架，只要按照指定接口就行
 ### 看这个接口
 ```java
-		package org.majorxie.dreamvc.ioc.factory;
+package org.majorxie.dreamvc.ioc.factory;
 
-		import java.util.List;
+import java.util.List;
 
-		import javax.servlet.ServletConfig;
-		import javax.servlet.ServletContext;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 
-		/**
-		 *IOC 容器 工厂接口
-		 *
-	 	* @author xiezhaodong(majorxie@139.com)
-		 *2014-10-24
-		 */
-		public interface IocFactory {
-			/**
-			 * 加载容器
-			 * @param config
-			 */
-			void init(ServletContext context);
-			
-			
-			/**
-			 * destory ioc
-			 */
-			void destroy();
-			
-			
-			/**
-			 * 得到所有的controller对象
-			 * @return
-			 */
-			List<Object> getControllers()throws Exception;
-			
-			/**
-			 * 是否是拦截器
-			 * @return
-			 */
-			List<Object> getInterceptors();
-			
-			/**
-			 * 得到其他对象
-			 * @return
-			 */
-			List<Object> getOthers();
-		}
+
+
+/**
+ *IOC 工厂
+ *
+ * @author xiezhaodong(majorxie@139.com)
+ *2014-10-24
+ */
+public interface IocFactory {
+	/**
+	 * 初始化
+	 * @param config
+	 */
+	void init(ServletContext context);
+	/**
+	 * destory ioc
+	 */
+	void destroy();
+	/**
+	 * 得到controler
+	 * @return
+	 */
+	List<Object> getControllers()throws Exception;
+	/**
+	 * 得到interpcetor
+	 * @return
+	 */
+	List<Object> getInterceptors();
+	
+	/**
+	 * 得到其他
+	 * @return
+	 */
+	List<Object> getOthers();
+}
+
 ```
 然后将实现类的全包路径在web.xml传入就行了，我默认实现了一个Springioc，具体可以见源代码
 然后这样就行了
 ### 看xml文件
-		  <init-param>
-		<param-name>container</param-name>
-		<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
-		</init-param>
+```xml
+<init-param>
+	<param-name>container</param-name>
+	<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
+</init-param>
+```
 这样就实现dreamvc和ioc模块的集成，当然还可以自己实现自己的伪ioc，哈哈。
 ###二、模板模式集成，默认jsp模板
 结合了flask框架的思想。让用户可以选择自己的模板比如JSP/VELOCITY/FREEMAKER，继承这个模板工厂
-		package org.majorxie.dreamvc.template;
-		
-		import org.majorxie.dreamvc.tag.Contextconfig.Config;
-		
-		/**
-		 * 抽象工厂，用于初始化模板工厂
-		 * @author xiezhaodong
-		 *2014-11-14
-		 */
-		public abstract class TemplateFactory {
-			private static TemplateFactory instance;
-			
-			
-			public static void setInstance(TemplateFactory instance) {
-				TemplateFactory.instance = instance;
-			}
-			
-			public static TemplateFactory getInstance(){
-				return instance;
-			}
-			
-			/**
-			 * 初始化一些上下文内容
-			 * @param config
-			 */
-			public abstract void init(Config config);
-			
-			/**
-			 * 加载模板
-			 * @param path 要返回的路径
-			 */
-			public abstract Template initTemplate(String path,ForwardType type);
-			
-			
-		}
-然后是这个接口，实现正真的模板
-		package org.majorxie.dreamvc.template;
-		
-		import java.util.Map;
-		
-		import javax.servlet.http.HttpServletRequest;
-		import javax.servlet.http.HttpServletResponse;
-		
-		/**
-		 * 基于python的模板机制
-		 * @author xiezhaodong
-		 *2014-11-14
-		 */
-		public interface Template {
-		
-			
-			
-			/**
-			 * 
-			 * @param req  request
-			 * @param resp response
-			 * @param models 要传递的数据，默认是model
-			 * @throws Exception
-			 */
-			void handleRender(HttpServletRequest req,HttpServletResponse resp,Map<String, Object> models)throws Exception;
-		}
+```java
+package org.majorxie.dreamvc.template;
+
+import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
+
+/**
+ * 结合python的flask框架，抽象出来一个模板方法
+ * @author xiezhaodong
+ *2014-11-14
+ */
+public abstract class TemplateFactory {
+	private static TemplateFactory instance;
+	
+	
+	public static void setInstance(TemplateFactory instance) {
+		TemplateFactory.instance = instance;
+	}
+	
+	public static TemplateFactory getInstance(){
+		return instance;
+	}
+	
+	/**
+	 * 初始化
+	 * @param config
+	 */
+	public abstract void init(StrategyConfig config);
+	
+	/**
+	 * 主要方法
+	 * @param path 跳转的路径
+	 */
+	public abstract Template initTemplate(String path,ForwardType type) throws Exception;
+	
+	
+}
+```
+
+然后是这个接口，实现完成的模板
+```java
+package org.majorxie.dreamvc.template;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * 结合python的flask
+ * @author xiezhaodong
+ *2014-11-14
+ */
+public interface Template {
+
+	
+	
+	/**
+	 * 
+	 * @param req  request
+	 * @param resp response
+	 * @param models 
+	 * @throws Exception
+	 */
+	void handleRender(HttpServletRequest req,HttpServletResponse resp,Map<String, Object> models)throws Exception;
+}
+
+```
 ### 以下的xml是我自己实现的模板(jsp).
-		    </init-param>
-		    <init-param>
-		    <param-name>template</param-name>
-		    <param-value>test.JspTemplateFactory</param-value>
-		    </init-param>
+```xml
+   </init-param>
+	    <init-param>
+	    <param-name>template</param-name>
+	    <param-value>test.JspTemplateFactory</param-value>
+ </init-param>
+```
 如果你是默认使用jsp模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
 
 ### 如何使用
-		@Controller//用controller注解表示该类或者实现controller接口
+```java
+	@Controller//用controller注解表示该类或者实现controller接口
 		public class ConTest {
-			
 			@RequestURI("/login.do")//建议用.do的方式类似/user/login/check.do,参数传递最好全部都传，不传递会报404
 			public Renderer hehe(String name,int  s) throws IOException{//目前还不支持bean传递，只要传统的参数
 			//传递，函数返回值可以使String、void、render.render表示只用模板目前有/JsonTemplate/TextTemplate/
@@ -163,12 +171,13 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 			}
 		
 		}
+```
 
 如果你想得到servletapi，你可以在ActionContext.getHttpServletRequest()得到request对象,其他也是一样
 ### 关于拦截器的使用
 首先你必须实现Interceptor接口或者继承AbstractInterceptor类，实现doInterceptor（）和afterInterceptor（）方法，而且必须要使用
 InterceptorURI来指定需要拦截的路径，比如
-
+```java
 			@InterceptorURI(url="/login.do")
 			public class Interceptor_02 extends AbstractInterceptor {
 		
@@ -205,6 +214,7 @@ InterceptorURI来指定需要拦截的路径，比如
 			}
 		
 		}
+```
 		interceptor返回true将会放行，执行下一个拦截器，返回false则不会对应执行方法
 		而且匹配度最高的路径会优先拦截，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*代替
 		比如我的方法路径是/user/login/check.do(星表示*)
