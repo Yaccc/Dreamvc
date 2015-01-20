@@ -5,7 +5,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 ###Dreamvc大致流程图
 ![image](https://github.com/xiexiaodong/Dreamvc/blob/master/library/Dreamvc.png)
 
-##ioc工厂接口
+####ioc工厂接口
 只要实现这个接口，就可以让Dramvc和任何ioc容器结合
 ```java
 package org.majorxie.dreamvc.ioc.factory;
@@ -50,7 +50,7 @@ public interface IocFactory {
 ```
 然后将实现类的全包路径在web.xml传入就行了，我默认实现了一个Springioc，具体可以见源代码
 然后这样就行了
-##xml文件
+####xml文件
 ```xml
 <init-param>
 	<param-name>container</param-name>
@@ -58,7 +58,7 @@ public interface IocFactory {
 </init-param>
 ```
 这样就实现dreamvc和ioc模块的集成，当然还可以自己实现自己的伪ioc，哈哈。
-##二、模板模式集成，默认jsp模板
+####模板模式集成，默认jsp模板
 结合了flask框架的思想。让用户可以选择自己的模板比如JSP/VELOCITY/FREEMAKER，继承这个模板工厂
 ```java
 package org.majorxie.dreamvc.template;
@@ -97,7 +97,7 @@ public abstract class TemplateFactory {
 	
 }
 ```
-#然后是这个接口，实现完成的模板
+####然后是这个接口，实现完成的模板
 ```java
 package org.majorxie.dreamvc.template;
 
@@ -123,7 +123,7 @@ public interface Template {
 }
 
 ```
-## 以下的xml是我自己实现的模板(jsp).
+#### 以下的xml是我自己实现的模板(jsp).
 ```xml
    </init-param>
 	    <init-param>
@@ -133,7 +133,7 @@ public interface Template {
 ```
 如果你是默认使用jsp模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
 
-### 如何使用
+#### 如何使用
 ```java
 	@Controller//用controller注解表示该类或者实现controller接口
 		public class ConTest {
