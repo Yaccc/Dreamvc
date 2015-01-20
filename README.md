@@ -11,6 +11,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 ###一、ioc集成
     dreamvc可以集成任何ioc框架，只要按照指定接口就行
 ### 看这个接口
+```java
 		package org.majorxie.dreamvc.ioc.factory;
 
 		import java.util.List;
@@ -56,6 +57,7 @@ A simple and support the restful structure of the Java MVC framework, I have lit
 			 */
 			List<Object> getOthers();
 		}
+```
 然后将实现类的全包路径在web.xml传入就行了，我默认实现了一个Springioc，具体可以见源代码
 然后这样就行了
 ### 看xml文件
