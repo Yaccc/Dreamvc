@@ -8,7 +8,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.majorxie.dreamvc.helpers.StringHeplers;
 
-import test.T;
 
 /**
  *数据类型转换工厂
