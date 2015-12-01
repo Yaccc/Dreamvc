@@ -34,7 +34,6 @@
 
       </servlet>
 
-
       <servlet-mapping>
         <servlet-name>DispatcherServlet</servlet-name>
         <url-pattern>*.do</url-pattern>
@@ -62,7 +61,6 @@
         <param-value>org.majorxie.dreamvc.template.VelocityTemplateFactory</param-value>
         </init-param>
         -->
-
     </filter>
 
     <filter-mapping>
@@ -70,7 +68,4 @@
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 
-    <welcome-file-list>
-        <welcome-file>index.jsp</welcome-file>
-    </welcome-file-list>
 </web-app>
