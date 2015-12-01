@@ -8,6 +8,6 @@ classes
 .classpath
 .mymetadata
 .project
-dreamvc.iml
+*.iml
 target
 lib
