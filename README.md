@@ -88,35 +88,35 @@ public interface Template {
 >If you are using the default `jsp` template, you can give this parameter, dreamvc will automatically help you select the JSP template
 
 ###如何使用
-- 把`dreamvc-core.jar`包包含进您的项目（加入WEB-INF/lib中）,然后项目用我提供的`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）
+- The `dreamvc-core.jar` package is included in your project (WEB-INF/lib), and then the project is built with the `pom.xml` I provide, which is necessary for the three party and the construction method (example/example2.0 is a complete example).
 
-- 最简单的`web.xml`配置（更多方式参见`example`）
+- The simplest `web.xml` configuration (see `example`).
 ```xml
- <!-- 配置文件位置，默认为/WEB-INF/applicationContext.xml -->
+ <!-- Configuration file location, the default is /WEB-INF/applicationContext.xml -->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
-    <!-- 上下文Spring监听器 -->
+    <!-- The Spring context listener -->
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
     <filter>
         <filter-name>DispatcherFilter</filter-name>
         <filter-class>org.majorxie.dreamvc.mvc.dispatcher.DispatcherFilter
-        </filter-class><!-- 选择filter进入，或者选择servlet进入（如上） -->
+        </filter-class><!-- Select filter to enter, or select servlet to enter (as above) -->
         <init-param>
             <param-name>container</param-name>
-            <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value><!-- 选择springioc作为ioc容器 -->
+            <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value><!-- Select springioc as the IOC container -->
         </init-param>
         <init-param>
             <param-name>CodeEnhancement</param-name>
-            <param-value>SpringAsm</param-value><!-- 选择SpringAsm或者javassist -->
+            <param-value>SpringAsm</param-value><!-- Choose SpringAsm or javassist -->
 
         </init-param>
         <init-param>
             <param-name>template</param-name>
-            <param-value></param-value><!-- 选择返回模板这里不填自动选择jsp模板 -->
+            <param-value></param-value><!-- Select the template for the return of the template here and not automatically select the JSP template -->
         </init-param>
     </filter>
  <filter-mapping>
@@ -124,7 +124,7 @@ public interface Template {
         <url-pattern>*.do</url-pattern>
     </filter-mapping>
 ```
-- `controller`如何写，模板如何使用？
+- `Controller` how to write, how to use the template?
 ```java
 @Controller//用controller注解表示该类或者实现controller接口
 public class ConTest {
@@ -148,11 +148,10 @@ public class ConTest {
 	}
 }
 ```
->如果你想得到servletapi，你可以在`ActionContext.getHttpServletRequest()`得到request对象,其他也是一样,参见`example`项目
+>If you want to get servletapi, you can get the request object in `ActionContext.getHttpServletRequest (), and the other is the same, see the `example` project
 
-#### 关于拦截器的使用
-首先你必须实现`Interceptor`接口或者继承`AbstractInterceptor`类，实现`doInterceptor（）`和`afterInterceptor（）`方法，而且必须要使用
-`InterceptorURI`注解来指定需要拦截的路径，如下
+#### The use of the interceptor
+First, you must implement the `Interceptor` interface or the `AbstractInterceptor` class to implement the `doInterceptor () and `afterInterceptor () method, and must be used.`InterceptorURI` comment to specify the path to intercept, as follows
 ```java
 @InterceptorURI(url="/login.do")
 public class Interceptor_02 extends AbstractInterceptor {
@@ -183,8 +182,8 @@ public class LoginInterceptor implements Interceptor {
 			}
 }
 ```
-`interceptor`返回`true`将会放行，执行下一个拦截器，返回`false`则不会对应执行方法
-而且匹配度最高的路径会优先拦截，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*星*(星代替`*`字符)代替
+`interceptor` `true` will return to the release, the execution of the next interceptor, `false` does not return a corresponding executing method
+And the highest degree of matching path will be a priority，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*星*(星代替`*`字符)代替
 比如我的方法路径是`/user/login/check.do`
 那么我可以/星/星/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为`星`，那么星前面的路径应该相对相同,
 
