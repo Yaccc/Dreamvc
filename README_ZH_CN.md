@@ -1,5 +1,5 @@
 Dreamvc
-=================================== 
+===================================
 一个简单的和支持的Java的MVC框架结构的宁静，我才疏学浅，希望大家多多指教
 >`Dreamvc`结合了`Struts2`和`SpringMVC`框架的思想，但是`Dreamvc`有两个入口(filter和servlet均可)，`Dreamvc`结合了`Python-flask`框架的模板机制，实现了自己的模板，可自行扩展，目前Dreamvc自动实现了jsp和`velocity`模板。Dreamvc提供开发者自行的IOC接口，可以和任何IOC框架结合，Dramvc的拦截器采用`Struts2`拦截器机制(栈式)，annotation方式方便简单，匹配算法可以模糊匹配/精准匹配，方法的参数注入依赖`javassist`或者Spring框架自带的字节码方案。
 
@@ -191,11 +191,9 @@ public class LoginInterceptor implements Interceptor {
 比如我的方法路径是`/user/login/check.do`
 那么我可以/星/星/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为`星`，那么星前面的路径应该相对相同,
 
-- [English document](https://github.com/xiexiaodong/Dreamvc/blob/master/README.md)
-- [中文文档](https://github.com/xiexiaodong/Dreamvc/blob/master/README_ZH_CN.md)
-		
 
-  
-  
-  
-  
+
+
+
+
+
