@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="2.5" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+  
+	<!-- 配置文件位置，默认为/WEB-INF/applicationContext.xml -->  
+    <context-param>  
+        <param-name>contextConfigLocation</param-name>  
+        <param-value>/WEB-INF/applicationContext.xml</param-value>  
+    </context-param>  
+    
+     <!-- 上下文Spring监听器 -->  
+    <listener>  
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
+    </listener>
+ 
+
+<!--  
+  <servlet>
+
+    <servlet-name>DispatcherServlet</servlet-name>
+    <servlet-class>org.majorxie.dreamvc.mvc.dispatcher.DispatcherServlet</servlet-class>
+    <init-param>
+    <param-name>container</param-name>
+    <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
+    </init-param>
+    <init-param>
+    <param-name>CodeEnhancement</param-name>
+    <param-value>javassist</param-value>
+    </init-param>
+    
+  </servlet>
+
+ 
+  <servlet-mapping>
+    <servlet-name>DispatcherServlet</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping> -->
+  <filter>
+  <filter-name>DispatcherFilter</filter-name>
+  <filter-class>org.majorxie.dreamvc.mvc.dispatcher.DispatcherFilter</filter-class><!-- 选择filter进入，或者选择servlet进入（如上） -->
+  <init-param>
+    <param-name>container</param-name>
+    <param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value><!-- 选择springioc作为ioc容器 -->
+    </init-param>
+    <init-param>
+    <param-name>CodeEnhancement</param-name>
+    <param-value>SpringAsm</param-value><!-- 选择SpringAsm或者javassist -->
+    
+    </init-param>
+    <init-param>
+    <param-name>template</param-name>
+    <param-value></param-value><!-- 选择返回模板这里不填自动选择jsp模板 -->
+    </init-param>
+    <!-- velocity模板
+   <init-param>
+    <param-name>template</param-name>
+    <param-value>org.majorxie.dreamvc.template.VelocityTemplateFactory</param-value>
+    </init-param>
+    -->
+    
+  </filter>
+  
+  <filter-mapping>
+  <filter-name>DispatcherFilter</filter-name>
+  <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>
