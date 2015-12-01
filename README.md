@@ -2,6 +2,7 @@ Dreamvc
 =================================== 
 A simple and support the restful structure of the Java MVC framework, I have little talent and less learning, we hope the exhibitions
 >Dreamvc结合了Struts2和SpringMVC框架的思想，但是Dreamvc有两个入口(filter和servlet均可)，Dreamvc结合了python-flask框架的模板机制，实现了自己的模板，可自行扩展，目前Dreamvc自动实现了jsp和velocity模板。Dreamvc提供开发者自行的ioc接口，可以和任何ioc框架结合，Dramvc的拦截器采用struts2拦截器机制，annotation方式方便简单，匹配算法可以模糊匹配/精准匹配，方法的参数注入依赖javassist。
+
 ###Dreamvc大致流程图
 ![image](https://github.com/xiexiaodong/Dreamvc/blob/master/library/Dreamvc.png)
 
