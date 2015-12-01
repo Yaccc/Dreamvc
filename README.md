@@ -91,7 +91,7 @@ public interface Template {
 >如果你是默认使用`jsp`模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
 
 ###如何使用
-- 把`dreamvc-core.jar`包包含进您的项目（加入WEB-INF/lib中）,然后项目用我提供的`pom.xml`构建,里面有必要的三方包和构建方式
+- 把`dreamvc-core.jar`包包含进您的项目（加入WEB-INF/lib中）,然后项目用我提供的`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）
 
 - 最简单的`web.xml`配置（更多方式参见`example`）
 ```xml
