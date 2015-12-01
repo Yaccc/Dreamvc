@@ -150,6 +150,7 @@ public class ConTest {
 }
 ```
 >如果你想得到servletapi，你可以在ActionContext.getHttpServletRequest()得到request对象,其他也是一样,参见`example`项目
+
 #### 关于拦截器的使用
 首先你必须实现`Interceptor`接口或者继承`AbstractInterceptor`类，实现`doInterceptor（）`和`afterInterceptor（）`方法，而且必须要使用
 `InterceptorURI`注解来指定需要拦截的路径，如下
