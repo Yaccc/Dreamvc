@@ -73,40 +73,30 @@ import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
  */
 public abstract class TemplateFactory {
 	private static TemplateFactory instance;
-	
-	
 	public static void setInstance(TemplateFactory instance) {
 		TemplateFactory.instance = instance;
 	}
-	
 	public static TemplateFactory getInstance(){
 		return instance;
 	}
-	
 	/**
 	 * 初始化
 	 * @param config
 	 */
 	public abstract void init(StrategyConfig config);
-	
 	/**
 	 * 主要方法
 	 * @param path 跳转的路径
 	 */
 	public abstract Template initTemplate(String path,ForwardType type) throws Exception;
-	
-	
 }
 ```
 ####然后是这个接口，实现完成的模板
 ```java
 package org.majorxie.dreamvc.template;
-
 import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 /**
  * 结合python的flask
  * @author xiezhaodong
@@ -114,7 +104,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public interface Template {
 	/**
-	 * 
 	 * @param req  request
 	 * @param resp response
 	 * @param models 
@@ -122,11 +111,10 @@ public interface Template {
 	 */
 	void handleRender(HttpServletRequest req,HttpServletResponse resp,Map<String, Object> models)throws Exception;
 }
-
 ```
 #### 以下的xml是我自己实现的模板(jsp).
 ```xml
-   </init-param>
+ </init-param>
 	    <init-param>
 	    <param-name>template</param-name>
 	    <param-value>test.JspTemplateFactory</param-value>
@@ -136,38 +124,34 @@ public interface Template {
 
 #### 如何使用
 ```java
-	@Controller//用controller注解表示该类或者实现controller接口
-		public class ConTest {
-			@RequestURI("/login.do")//建议用.do的方式类似/user/login/check.do,参数传递最好全部都传，不传递会报404
-			public Renderer hehe(String name,int  s) throws IOException{//目前还不支持bean传递，只要传统的参数
+@Controller//用controller注解表示该类或者实现controller接口
+public class ConTest {
+    @RequestURI("/login.do")//建议用.do的方式类似/user/login/check.do,参数传递最好全部都传，不传递会报404
+	public Renderer hehe(String name,int  s) throws IOException{//目前还不支持bean传递，只要传统的参数
 			//传递，函数返回值可以使String、void、render.render表示只用模板目前有/JsonTemplate/TextTemplate/
 			//和jsp模板TemplateRender,默认跳转是forword跳转，可以看构造函数设置FORWARD.Rediect设置客户端跳转
 			//服务器端跳转可以传递map对象，也可以像下面这种方式
-				TemplateRender render=new TemplateRender("WEB-INF/pages/test.jsp");
-				render.addVaule("posts", "qwoeqwe");
-				return render;	
+			TemplateRender render=new TemplateRender("WEB-INF/pages/test.jsp");
+			render.addVaule("posts", "qwoeqwe");
+			return render;
+	}
+	@RequestURI("/check.do")
+	public void haha() {
+		try {
+			System.out.println("do something...");
+			} catch (Exception e) {
+			    e.printStackTrace();
 			}
-			@RequestURI("/check.do")
-			public void haha() {
-				try {
-					System.out.println("-------");
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			
-				
-			}
-		
-		}
+	}
+}
 ```
-
 如果你想得到servletapi，你可以在ActionContext.getHttpServletRequest()得到request对象,其他也是一样
 ### 关于拦截器的使用
 首先你必须实现Interceptor接口或者继承AbstractInterceptor类，实现doInterceptor（）和afterInterceptor（）方法，而且必须要使用
 InterceptorURI来指定需要拦截的路径，比如
 ```java
-		@InterceptorURI(url="/login.do")
-		public class Interceptor_02 extends AbstractInterceptor {
+@InterceptorURI(url="/login.do")
+public class Interceptor_02 extends AbstractInterceptor {
 		
 			@Override
 			public boolean doInterceptor() {
@@ -179,34 +163,26 @@ InterceptorURI来指定需要拦截的路径，比如
 			public void afterInterceptor() {
 				System.out.println("end_02");
 			}
-		}
-		@InterceptorURI(url="/*")
-		public class LoginInterceptor implements Interceptor {
-		
+}
+@InterceptorURI(url="/*")
+public class LoginInterceptor implements Interceptor {
 			public void destory() {
-		
 			}
-		
 			public void init() {
-		
 			}
-		
 			public boolean doInterceptor() {
 				System.out.println("login_start");
 				return true;
 			}
-		
 			public void afterInterceptor() {
 				System.out.println("login_end");
-		
 			}
-		
-		}
+}
 ```
 interceptor返回true将会放行，执行下一个拦截器，返回false则不会对应执行方法
 而且匹配度最高的路径会优先拦截，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*代替
-比如我的方法路径是/user/login/check.do(星表示*)
-那么我可以/星/星/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为星，那么星前面的路径应该相对相同,
+比如我的方法路径是/user/login/check.do
+那么我可以/`*`/`*`/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为`*`，那么星前面的路径应该相对相同,
 
 		
 
