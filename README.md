@@ -183,9 +183,9 @@ public class LoginInterceptor implements Interceptor {
 }
 ```
 `interceptor` `true` will return to the release, the execution of the next interceptor, `false` does not return a corresponding executing method
-And the highest degree of matching path will be a priority，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*星*(星代替`*`字符)代替
-比如我的方法路径是`/user/login/check.do`
-那么我可以/星/星/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为`星`，那么星前面的路径应该相对相同,
+And the highest degree of matching path will be a priority，While blocking the path of the relative length must be less than or equal to the path length. Equal to the uncertain path with * STAR * (Star instead of ` * ` character) instead of
+For example, the path is `/user/login/check.do`
+Then I can / star / star /check.do to intercept can be /check.do /user/ to any match, of course, if the short path to the end of the star, then the front of the path should be relatively the same.
 
 - [English document](https://github.com/xiexiaodong/Dreamvc/blob/master/README.md)
 - [中文文档](https://github.com/xiexiaodong/Dreamvc/blob/master/README_ZH_CN.md)
