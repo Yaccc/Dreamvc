@@ -1,26 +1,23 @@
 Dreamvc
 =================================== 
-一个简单的和支持的Java的MVC框架结构的宁静，我才疏学浅，希望大家多多指教
->`Dreamvc`结合了`Struts2`和`SpringMVC`框架的思想，但是`Dreamvc`有两个入口(filter和servlet均可)，`Dreamvc`结合了`Python-flask`框架的模板机制，实现了自己的模板，可自行扩展，目前Dreamvc自动实现了jsp和`velocity`模板。Dreamvc提供开发者自行的IOC接口，可以和任何IOC框架结合，Dramvc的拦截器采用`Struts2`拦截器机制(栈式)，annotation方式方便简单，匹配算法可以模糊匹配/精准匹配，方法的参数注入依赖`javassist`或者Spring框架自带的字节码方案。
+A simple and support the restful structure of the Java MVC framework, I have little talent and less learning, we hope the exhibitions
+>`Dreamvc` combines the ideas of `Struts2` and `SpringMVC` framework，But `Dreamvc` has two entries(filter and servlet)，`Dreamvc` combines the template mechanism of `Python-flask` framework，Achieve their own template，Self expanding，At present, the `JSP` and `velocity` templates are implemented by Dreamvc.Dreamvc provides the developer's IOC interface can be combined with any IOC framework，Dreamvc uses the `Struts2` interceptor mechanism(Stack)，Annotation convenient way，Matching algorithm can be fuzzy matching / precision matching，The parameters of the method are injected into the `javassist` or `Spring framework`.
 
-####Dreamvc大致流程图
-![image](https://github.com/xiexiaodong/Dreamvc/blob/master/library/Dreamvc.png)
-
-####IOC工厂接口
-- 只要实现这个接口，就可以让Dramvc和任何IOC容器结合
+####IOC factory interface
+- As long as the implementation of this interface, you can let Dramvc and any IOC container
 ```java
 package org.majorxie.dreamvc.ioc.factory;
 import java.util.List;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 /**
- *IOC 工厂
+ *IOC Factory
  * @author xiezhaodong(majorxie@139.com)
  *2014-10-24
  */
 public interface IocFactory {
 	/**
-	 * 初始化配置
+	 * init config
 	 */
 	void init(ServletContext context);
 	/**
@@ -28,33 +25,33 @@ public interface IocFactory {
 	 */
 	void destroy();
 	/**
-	 *得到所有的controller
+	 *get all controller
 	 */
 	List<Object> getControllers()throws Exception;
 	/**
-	 * 得到所有的拦截器
+	 * get all interceptors
 	 */
 	List<Object> getInterceptors();
 	/**
-	 * 得到IOC容器中其他对象
+	 * init others object from IOC
 	 */
 	List<Object> getOthers();
 }
 ```
-- 然后将实现类的全包路径在`web.xml`传入就行了，我默认实现了一个`Springioc`(如下)
+- Then the implementation of full path incoming classes on the line in `web.xml`, I implemented a default `Springioc` (below)
 ```xml
 <init-param>
 	<param-name>container</param-name>
 	<param-value>org.majorxie.dreamvc.ioc.factory.SpringIocFactory</param-value>
 </init-param>
 ```
-####模板模式集成，默认jsp模板
-- 结合了flask框架的思想。让用户可以选择自己的模板比如JSP/velocity/freemarker等等，只要继承这个模板工厂（如下）
+####Template mode integration, default JSP template
+- Combined with the idea of flask framework. So that users can choose their own templates such as JSP/velocity/freemarker, etc., as long as the successor to the template factory (as follows)
 ```java
 package org.majorxie.dreamvc.template;
 import org.majorxie.dreamvc.tag.Contextconfig.StrategyConfig;
 /**
- * 结合python的flask框架，抽象出来一个模板方法
+ * Python flask framework, abstract a template method
  * @author xiezhaodong
  *2014-11-14
  */
@@ -70,7 +67,7 @@ public abstract class TemplateFactory {
 	public abstract Template initTemplate(String path,ForwardType type) throws Exception;
 }
 ```
-- 实现这个接口，完成模板的实现（具体可参见jsp模板的实现）
+- Achieve this interface, complete the implementation of the template (see the implementation of the JSP template specifically)
 ```java
 package org.majorxie.dreamvc.template;
 import java.util.Map;
@@ -88,7 +85,7 @@ public interface Template {
 	    <param-value>org.majorxie.dreamvc.template.JspTemplateFactory</param-value>
  </init-param>
 ```
->如果你是默认使用`jsp`模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
+>If you are using the default `jsp` template, you can give this parameter, dreamvc will automatically help you select the JSP template
 
 ###如何使用
 - 把`dreamvc-core.jar`包包含进您的项目（加入WEB-INF/lib中）,然后项目用我提供的`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）
