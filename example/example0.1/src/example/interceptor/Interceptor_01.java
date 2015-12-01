@@ -6,21 +6,21 @@ import javax.servlet.http.HttpSession;
 import org.majorxie.dreamvc.annotation.InterceptorURI;
 import org.majorxie.dreamvc.helpers.ActionContext;
 import org.majorxie.dreamvc.interceptor.AbstractInterceptor;
-@InterceptorURI(url="/user/string.do")//ÕâÀïÎÒÃÇ¶Óstring.doÀ¹½Ø
+@InterceptorURI(url="/user/string.do")//è¿™é‡Œæˆ‘ä»¬é˜Ÿstring.doæ‹¦æˆª
 public class Interceptor_01 extends AbstractInterceptor {
 
 	@Override
 	public boolean doInterceptor() {
-		HttpServletRequest req=ActionContext.getActionContext().getHttpServletRequest();//Ò²¿ÉÒÔµÃµ½¶ÔÏó
+		HttpServletRequest req=ActionContext.getActionContext().getHttpServletRequest();//ä¹Ÿå¯ä»¥å¾—åˆ°å¯¹è±¡
 		HttpSession session=ActionContext.getActionContext().getHttpSession();
-		//È»ºó¶Ôsession½øĞĞ²Ù×÷
+		//ç„¶åå¯¹sessionè¿›è¡Œæ“ä½œ
 		System.out.println("FIRST START JSESSIONID:"+session.getId());
-		return true;//trueÎª·ÅĞĞ£¬Ö´ĞĞÏÂÒ»¸öÀ¹½ØÆ÷£¬·µ»ØfalseÔò²»»á¼ÌĞøÍùÏÂ
+		return true;//trueä¸ºæ”¾è¡Œï¼Œæ‰§è¡Œä¸‹ä¸€ä¸ªæ‹¦æˆªå™¨ï¼Œè¿”å›falseåˆ™ä¸ä¼šç»§ç»­å¾€ä¸‹
 	}
-	
+
 	@Override
-	public void afterInterceptor() {//¸²¸Ç¸¸Àà·½·¨
-		//Ö´ĞĞÍê·½·¨Ö®ºóÖ´ĞĞµÄ·½·¨
+	public void afterInterceptor() {//è¦†ç›–çˆ¶ç±»æ–¹æ³•
+		//æ‰§è¡Œå®Œæ–¹æ³•ä¹‹åæ‰§è¡Œçš„æ–¹æ³•
 		System.out.println("FIRST END ");
 		super.afterInterceptor();
 	}

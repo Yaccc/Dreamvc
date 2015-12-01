@@ -2,7 +2,7 @@ package example.interceptor;
 
 import org.majorxie.dreamvc.annotation.InterceptorURI;
 import org.majorxie.dreamvc.interceptor.Interceptor;
-@InterceptorURI(url="/*/string.do")//ÕâÑùÒ²ÄÜ¶Ô/user/string.do½øĞĞÀ¹½Ø»òÕß/*/*Ò²¿ÉÒÔ
+@InterceptorURI(url="/*/string.do")//è¿™æ ·ä¹Ÿèƒ½å¯¹/user/string.doè¿›è¡Œæ‹¦æˆªæˆ–è€…/*/*ä¹Ÿå¯ä»¥
 public class Interceptor_02 implements Interceptor {
 
 	public void destory() {
