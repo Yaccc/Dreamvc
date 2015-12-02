@@ -87,7 +87,7 @@ public interface Template {
 ```
 >If you are using the default `jsp` template, you can give this parameter, dreamvc will automatically help you select the JSP template
 
-###如何使用
+###How to use
 - The `dreamvc-core.jar` package is included in your project (WEB-INF/lib), and then the project is built with the `pom.xml` I provide, which is necessary for the three party and the construction method (example/example2.0 is a complete example).
 
 - The simplest `web.xml` configuration (see `example`).
@@ -126,13 +126,13 @@ public interface Template {
 ```
 - `Controller` how to write, how to use the template?
 ```java
-@Controller//用controller注解表示该类或者实现controller接口
+@Controller//Using controller annotations to indicate the class or implement the controller interface
 public class ConTest {
-    @RequestURI("/login.do")//建议用.do的方式类似/user/login/check.do,参数传递最好全部都传，不传递会报404
-	public Renderer hehe(String name,int  s) throws IOException{//目前还不支持bean传递，只要传统的参数
-			//传递，函数返回值可以使String、void、render.render表示只用模板目前有/JsonTemplate/TextTemplate/
-			//和jsp模板TemplateRender,默认跳转是forword跳转，可以看构造函数设置FORWARD.Rediect设置客户端跳转
-			//服务器端跳转可以传递map对象，也可以像下面这种方式
+    @RequestURI("/login.do")//It is suggested that the.Do is similar to /user/login/check.do, and the best parameters are passed, and no delivery will be reported to 404.
+	public Renderer hehe(String name,int  s) throws IOException{//Bean is currently not supported, as long as the traditional parameters
+			//Pass, function return value can make String, void, render.render said only template currently has /JsonTemplate/TextTemplate/
+			//JSP template TemplateRender, the default jump is forword jump, you can see the constructor using FORWARD.Rediect set the client jump
+			//Server side jump can pass the map object, you can also like the following way
 			TemplateRender render=new TemplateRender("WEB-INF/pages/test.jsp");
 			render.addVaule("posts", "qwoeqwe");
 			return render;
