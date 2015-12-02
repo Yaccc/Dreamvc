@@ -88,8 +88,17 @@ public interface Template {
 >If you are using the default `jsp` template, you can give this parameter, dreamvc will automatically help you select the JSP template
 
 ###How to use
-- The `dreamvc-core.jar` package is included in your project (WEB-INF/lib), and then the project is built with the `pom.xml` I provide, which is necessary for the three party and the construction method (example/example2.0 is a complete example).
-
+- The `dreamvc-core.jar` package is included in your project (WEB-INF/lib), and then the project is built with the `pom.xml` I provide, which is necessary for the three party and the construction method (example/example2.0 is a complete example).Pay special attention to this configuration, which allows you to compile jar Lib in the Maven package, as below 
+```xml
+<!--add your dreamvc-core.jar's address-->
+    <dependency>
+      <groupId>dreamvc.majorxie</groupId>
+      <artifactId>mvc-dream</artifactId>
+      <version>1.0</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/dreamvc-core.jar</systemPath>
+    </dependency>
+```
 - The simplest `web.xml` configuration (see `example`).
 ```xml
  <!-- Configuration file location, the default is /WEB-INF/applicationContext.xml -->
