@@ -192,9 +192,9 @@ public class LoginInterceptor implements Interceptor {
 }
 ```
 `interceptor` `true` will return to the release, the execution of the next interceptor, `false` does not return a corresponding executing method
-And the highest degree of matching path will be a priority，While blocking the path of the relative length must be less than or equal to the path length. Equal to the uncertain path with * STAR * (Star instead of ` * ` character) instead of
+And the highest degree of matching path will be a priority，While blocking the path of the relative length must be less than or equal to the path length. Equal to the uncertain path with `*` instead of
 For example, the path is `/user/login/check.do`
-So I can use / star / star /check.do to intercept it,You can also use the /user/ star /check.do to match, if the short path to the end of the star, then the front of the path should be relatively the same.
+So I can use `/*/*/check.do` to intercept it,You can also use the `/user/*/check.do` to match, if the short path to the end of the star, then the front of the path should be relatively the same.
 
 - [English document](https://github.com/xiexiaodong/Dreamvc/blob/master/README.md)
 - [中文文档](https://github.com/xiexiaodong/Dreamvc/blob/master/README_ZH_CN.md)
