@@ -189,7 +189,7 @@ public class LoginInterceptor implements Interceptor {
 `interceptor`返回`true`将会放行，执行下一个拦截器，返回`false`则不会对应执行方法
 而且匹配度最高的路径会优先拦截，同时拦截路径的相对长度必须小于等于方法路径长度.等于的时候不确定的路径用*星*(星代替`*`字符)代替
 比如我的方法路径是`/user/login/check.do`
-那么我可以/星/星/check.do拦截可以/user/星/check.do来任意匹配，当然也可以如果短路径最后为`星`，那么星前面的路径应该相对相同,
+那么我可以用/星/星/check.do拦截,也可以用/user/星/check.do来任意匹配，当然也可以如果短路径最后为`星`，那么星前面的路径应该相对相同,
 
 
 
