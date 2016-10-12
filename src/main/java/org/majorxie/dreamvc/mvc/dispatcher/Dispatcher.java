@@ -181,7 +181,7 @@ public class Dispatcher {
 				HttpServletResponse resp, Execution execution)throws  ServletException, IOException {
 		  ActionContext.setActionContext(servletContext, req, resp);//把servlet上下文放入actioncontext中
 		  //将Interceptor的创建和使用都放在同一个方法中
-		  Interceptor[] interceptors = regexpActionAndInterceptor(new URI(req.getRequestURI()));
+		  Interceptor[] interceptors = regexpActionAndInterceptor(new URI(req.getServletPath()));
 		   InterceptorChain chain=new InterceptorChain(execution, interceptors);//将得到的拦截器封装成一个拦截器链
 		   
 			try {//分别执行前后方法
