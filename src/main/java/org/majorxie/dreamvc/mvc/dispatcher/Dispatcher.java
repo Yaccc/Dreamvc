@@ -57,7 +57,6 @@ public class Dispatcher {
 	private SwitcherFactory switcherFactory=new SwitcherFactory();
 	private Map<URI, Action> uri_action=new HashMap<URI, Action>();
 	private ExceptionHandler handler=null;
-	private Interceptor[] interceptors=null;
 	private Map<String,Interceptor> interceptor_uri=new HashMap<String, Interceptor>();
 	private String CodeEnhancement=null;
 	private static final String JSPTEMPLATE="org.majorxie.dreamvc.template.JspTemplateFactory";
@@ -166,7 +165,6 @@ public class Dispatcher {
 		}
 		//根据相应的uri找到对应的interceptor
 		if (execution != null) {
-			interceptors = regexpActionAndInterceptor(uri);
 			handleExecution(req, resp, execution);//执行结果
 		}
 
@@ -182,7 +180,8 @@ public class Dispatcher {
 	  void handleExecution(HttpServletRequest req,
 				HttpServletResponse resp, Execution execution)throws  ServletException, IOException {
 		  ActionContext.setActionContext(servletContext, req, resp);//把servlet上下文放入actioncontext中
-		  
+		  //将Interceptor的创建和使用都放在同一个方法中
+		  Interceptor[] interceptors = regexpActionAndInterceptor(new URI(req.getServletPath()));
 		   InterceptorChain chain=new InterceptorChain(execution, interceptors);//将得到的拦截器封装成一个拦截器链
 		   
 			try {//分别执行前后方法
