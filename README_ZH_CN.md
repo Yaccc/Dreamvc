@@ -94,10 +94,29 @@ public interface Template {
 - 项目用`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）。如下
 ```xml
 1. git clone git@github.com:Yaccc/Dreamvc.git
-2. cd Dreamvc & mvn clean install
+2. cd Dreamvc & mvn  install
 ```
-
-
+- 加入依赖和必要的配置到pom.xml
+```xml
+<dependency>
+      <groupId>org.majorxie.dreamvc</groupId>
+      <artifactId>mvc-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+</dependency>
+....省略spring配置ioc依赖
+```
+- 定义你的controller到`applicationContext.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+....
+<bean id="myController" class="your_Controller"></bean><!-- 加入到你的ioc容器当中 -->
+<!--定义你的拦截器-->
+<!--<bean id="interceptor1" class="example.interceptor.Interceptor_01"></bean>-->
+<!--<bean id="interceptor_02" class="example.interceptor.Interceptor_02"></bean>-->
+	
+</beans>
+```
 - 最简单的`web.xml`配置（更多方式参见`example`）
 ```xml
  <!-- 配置文件位置，默认为/WEB-INF/applicationContext.xml -->
