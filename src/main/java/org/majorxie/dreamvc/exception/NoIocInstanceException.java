@@ -1,6 +1,6 @@
 package org.majorxie.dreamvc.exception;
 /**
- * ÊÇ·ñÓÐÈÝÆ÷´æÔÚ
+ *
  * @author xiezhaodong
  *2014-10-29
  */

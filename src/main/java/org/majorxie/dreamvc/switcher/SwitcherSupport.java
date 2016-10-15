@@ -1,6 +1,5 @@
 package org.majorxie.dreamvc.switcher;
 /**
- * 转换String，所有静态内部类
  * @author xiezhaodong
  *
  */

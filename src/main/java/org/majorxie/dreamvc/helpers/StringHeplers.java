@@ -1,6 +1,6 @@
 package org.majorxie.dreamvc.helpers;
 /**
- * String 的一些操作
+ * String
  * @author xiezhaodong
  *
  */

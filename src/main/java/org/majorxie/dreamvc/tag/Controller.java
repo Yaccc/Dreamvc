@@ -1,6 +1,6 @@
 package org.majorxie.dreamvc.tag;
 /**
- * ¿ØÖÆ²ãtag
+ * æŽ¥å…¥å±‚tag
  * @author xiezhaodong
  * 2014-10-27
  *

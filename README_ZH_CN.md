@@ -91,16 +91,10 @@ public interface Template {
 >如果你是默认使用`jsp`模板的话，你完全舍去这个参数，dreamvc会自动帮你选择jsp模板
 
 ###如何使用
-- 把`dreamvc-core.jar`包包含进您的项目（加入WEB-INF/lib中）,然后项目用我提供的`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）特别注意这个配置,这能让你的maven编译lib中的jar包。如下
+- 项目用`pom.xml`构建,里面有必要的三方包和构建方式（example/example2.0是一个完整的示例）。如下
 ```xml
-<!--add your dreamvc-core.jar's address-->
-    <dependency>
-      <groupId>dreamvc.majorxie</groupId>
-      <artifactId>mvc-dream</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/dreamvc-core.jar</systemPath>
-    </dependency>
+1. git clone git@github.com:Yaccc/Dreamvc.git
+2. cd Dreamvc & mvn clean install
 ```
 
 
