@@ -88,16 +88,31 @@ public interface Template {
 >If you are using the default `jsp` template, you can give this parameter, dreamvc will automatically help you select the JSP template
 
 ###How to use
-- The `dreamvc-core.jar` package is included in your project (WEB-INF/lib), and then the project is built with the `pom.xml` I provide, which is necessary for the three party and the construction method (example/example2.0 is a complete example).Pay special attention to this configuration, which allows you to compile jar Lib in the Maven package, as below 
+- Construction of the project with `pom.xml`, which is necessary for the three party packages and construction (example/example2.0 is a complete example). as follows
 ```xml
-<!--add your dreamvc-core.jar's address-->
-    <dependency>
-      <groupId>dreamvc.majorxie</groupId>
-      <artifactId>mvc-dream</artifactId>
-      <version>1.0</version>
-      <scope>system</scope>
-      <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/dreamvc-core.jar</systemPath>
-    </dependency>
+1. git clone git@github.com:Yaccc/Dreamvc.git
+2. cd Dreamvc & mvn  install
+```
+- add dependencies and the necessary configuration to pom.xml
+```xml
+<dependency>
+      <groupId>org.majorxie.dreamvc</groupId>
+      <artifactId>mvc-core</artifactId>
+      <version>1.0-SNAPSHOT</version>
+</dependency>
+....Omit the spring configuration
+```
+- Define your controller to `applicationContext.xml`
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans 
+....
+<bean id="myController" class="your_Controller"></bean><!--add controller -->
+<!--add your interceptor-->
+<!--<bean id="interceptor1" class="example.interceptor.Interceptor_01"></bean>-->
+<!--<bean id="interceptor_02" class="example.interceptor.Interceptor_02"></bean>-->
+	
+</beans>
 ```
 - The simplest `web.xml` configuration (see `example`).
 ```xml
